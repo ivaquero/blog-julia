@@ -4,7 +4,13 @@ authors = ["ivaquero"]
 
 [deps]
 Books = "939d5c6b-51ae-42e7-97ca-7564d0d4ad91"
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+Turing = "fce5fe82-541a-59a6-adf8-730c64b5f9a0"
+GLM = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
+PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
 Books = "2"

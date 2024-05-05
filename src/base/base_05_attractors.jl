@@ -7,7 +7,11 @@ using InteractiveUtils
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
     quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local iv = try
+            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
+        catch
+            b -> missing
+        end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
@@ -16,9 +20,9 @@ end
 
 # ╔═╡ 42059750-855e-49e4-87e3-0c2238aff2af
 begin
-	using Pkg
-	Pkg.activate()
-	Pkg.instantiate()
+    using Pkg
+    Pkg.activate()
+    Pkg.instantiate()
 end
 
 # ╔═╡ 0a619df8-1d09-4fc4-bfb3-ea29d07f6e22
@@ -64,7 +68,7 @@ md"##### Lorenz System"
 md"$\begin{align}
 \frac{dx}{dt} &= \sigma(y - x) \\
 \frac{dy}{dt} &= x(\rho - z) - y \\
-\frac{dz}{dt} &= xy - \beta z
+\frac{dz}{dt} &= xy - β z
 \end{align}$"
 
 # ╔═╡ d317a1ad-3ee0-424b-95a8-8a6cf283521a
@@ -92,11 +96,11 @@ md"### Define Julia Function"
 
 # ╔═╡ ca34cd21-d354-4d24-acbf-7bddd393f3b7
 function lorenz(du, u, p, t)
-	x, y, z = u
-	sigma, rho, beta = p
-	du[1] = dx = sigma * (y - x)
-	du[2] = dy = x * (rho - z) - y
-	du[3] = dz = x * y - beta * z
+    x, y, z = u
+    sigma, rho, beta = p
+    du[1] = dx = sigma * (y - x)
+    du[2] = dy = x * (rho - z) - y
+    du[3] = dz = x * y - beta * z
 end
 
 # ╔═╡ c9229d01-43c9-4643-bd4d-811a65acfade
@@ -155,13 +159,13 @@ md"##### Control Panel"
 
 # ╔═╡ a52939bc-9448-4003-9333-ffaf87fef207
 begin
-	reset
-	md"""
-	Initial ||
-	x: $(@bind lx_begin NumberField(0:1, default = 0)) ||
-	y: $(@bind ly_begin NumberField(0:1, default = 1)) ||
-	z: $(@bind lz_begin NumberField(0:1, default = 0))
-	"""
+    reset
+    md"""
+    Initial ||
+    x: $(@bind lx_begin NumberField(0:1, default = 0)) ||
+    y: $(@bind ly_begin NumberField(0:1, default = 1)) ||
+    z: $(@bind lz_begin NumberField(0:1, default = 0))
+    """
 end
 
 # ╔═╡ 3667c4fa-6237-4264-a7dd-11fb76043f8e
@@ -169,13 +173,13 @@ lu_begin = [lx_begin, ly_begin, lz_begin]
 
 # ╔═╡ a71d0c7f-d449-4dc3-b3ff-da62d77c43d7
 begin
-	reset
-	md"""
-	Parameters ||
-	sigma: $(@bind lσ Scrubbable(0.0:0.1:20.0, default = 10.0)) |
-	rho: $(@bind lρ Scrubbable(0.0:0.1:50.0, default = 28.0)) |
-	beta: $(@bind lβ Scrubbable(0.00:0.01:5.00, default = 8/3, format = ".2f"))
-	"""
+    reset
+    md"""
+    Parameters ||
+    sigma: $(@bind lσ Scrubbable(0.0:0.1:20.0, default = 10.0)) |
+    rho: $(@bind lρ Scrubbable(0.0:0.1:50.0, default = 28.0)) |
+    beta: $(@bind lβ Scrubbable(0.00:0.01:5.00, default = 8/3, format = ".2f"))
+    """
 end
 
 # ╔═╡ 2c7370ff-0a38-4087-9f63-33b7ab29cc92
@@ -185,7 +189,7 @@ lp = [lσ, lρ, lβ]
 lprob = ODEProblem(lorenz, lu_begin, ltspan, lp)
 
 # ╔═╡ 79cda05d-d676-4c51-b0c3-ba7e278b76ef
-soll = solve(lprob, reltol = 1e-8, abstol = 1e-8)
+soll = solve(lprob, reltol=1e-8, abstol=1e-8)
 
 # ╔═╡ 1563f1c1-4160-498d-a38d-a155133670e2
 soll.t
@@ -195,8 +199,8 @@ n = length(soll.t)
 
 # ╔═╡ 57c12cb6-2e0a-48e0-a9e7-f957a60e6cb5
 begin
-	reset
-	md"Index: $(@bind idx Slider(1:n, n, true))"
+    reset
+    md"Index: $(@bind idx Slider(1:n, n, true))"
 end
 
 # ╔═╡ f813b1f3-10eb-4606-8707-aeacff6d734c
@@ -222,16 +226,16 @@ convection = x[idx]
 
 # ╔═╡ b0c7e81e-fcd0-4a4b-9c09-f71020f8824a
 begin
-	figx = Figure()
+    figx = Figure()
 
-	axx = Axis(figx[1, 1],
-		title = "Lorenz System (Convection)",
-		xlabel = "t",
-		ylabel = "Convection (x)")
+    axx = Axis(figx[1, 1],
+        title="Lorenz System (Convection)",
+        xlabel="t",
+        ylabel="Convection (x)")
 
-	lines!(axx, t, x, linewidth = 2)
+    lines!(axx, t, x, linewidth=2)
 
-	figx
+    figx
 end
 
 # ╔═╡ 4af0fb0c-5505-4ab6-8215-4af4870c090b
@@ -242,30 +246,30 @@ horizontal = y[idx]
 
 # ╔═╡ 962ebd44-e2dc-44aa-b170-0037864f9e2b
 begin
-	figy = Figure()
+    figy = Figure()
 
-	axy = Axis(figy[1, 1],
-		title = "Lorenz System (Horizontal)",
-		xlabel = "t",
-		ylabel = "Horizontal (y)")
+    axy = Axis(figy[1, 1],
+        title="Lorenz System (Horizontal)",
+        xlabel="t",
+        ylabel="Horizontal (y)")
 
-	lines!(axy, t, y, linewidth = 2)
+    lines!(axy, t, y, linewidth=2)
 
-	figy
+    figy
 end
 
 # ╔═╡ 8bdc8356-a276-47e9-a0cf-a2285f21ed36
 begin
-	figxy = Figure()
+    figxy = Figure()
 
-	axxy = Axis(figxy[1, 1],
-		title = "Lorenz Attractor (Phase Space x y)",
-		xlabel = "Convection (x)",
-		ylabel = "Horizontal (y)")
+    axxy = Axis(figxy[1, 1],
+        title="Lorenz Attractor (Phase Space x y)",
+        xlabel="Convection (x)",
+        ylabel="Horizontal (y)")
 
-	lines!(axxy, x, y, linewidth = 2)
+    lines!(axxy, x, y, linewidth=2)
 
-	figxy
+    figxy
 end
 
 # ╔═╡ 9eb53234-6bc4-4757-b8ca-33abc5bebab1
@@ -276,78 +280,78 @@ vertical = z[idx]
 
 # ╔═╡ 27496fe5-84f5-4e98-b253-4bc9774c7247
 begin
-	figz = Figure()
+    figz = Figure()
 
-	axz = Axis(figz[1, 1],
-		title = "Lorenz System (Vertical)",
-		xlabel = "t",
-		ylabel = "Vertical (z)")
+    axz = Axis(figz[1, 1],
+        title="Lorenz System (Vertical)",
+        xlabel="t",
+        ylabel="Vertical (z)")
 
-	lines!(axz, t, z, linewidth = 2)
+    lines!(axz, t, z, linewidth=2)
 
-	figz
+    figz
 end
 
 # ╔═╡ a33809a9-35ac-40f8-ad52-6fb70600c206
 begin
-	figxz = Figure()
+    figxz = Figure()
 
-	axxz = Axis(figxz[1, 1],
-		title = "Lorenz Attractor (Phase Space x z)",
-		xlabel = "Convection (x)",
-		ylabel = "Vertical (z)")
+    axxz = Axis(figxz[1, 1],
+        title="Lorenz Attractor (Phase Space x z)",
+        xlabel="Convection (x)",
+        ylabel="Vertical (z)")
 
-	lines!(axxz, x, z, linewidth = 2)
+    lines!(axxz, x, z, linewidth=2)
 
-	figxz
+    figxz
 end
 
 # ╔═╡ 1be6adca-42f9-4c4a-a684-624022127265
 begin
-	figyz = Figure()
+    figyz = Figure()
 
-	axyz = Axis(figyz[1, 1],
-		title = "Lorenz Attractor (Phase Space y z)",
-		xlabel = "Horizontal (y)",
-		ylabel = "Vertical (z)")
+    axyz = Axis(figyz[1, 1],
+        title="Lorenz Attractor (Phase Space y z)",
+        xlabel="Horizontal (y)",
+        ylabel="Vertical (z)")
 
-	lines!(axyz, y, z, linewidth = 2)
+    lines!(axyz, y, z, linewidth=2)
 
-	figyz
+    figyz
 end
 
 # ╔═╡ 991ada5d-3df6-4571-b000-8af04a5f3629
 begin
-	figxyz = Figure()
+    figxyz = Figure()
 
-	axxyz = Axis3(figxyz[1, 1],
-		title = "Lorenz Attractor (Phase Space x y z)\n\n",
-		xlabel = "Convection (x)",
-		ylabel = "Horizontal (y)",
-		zlabel = "Vertical (z)",
-		azimuth = -0.2π)
+    axxyz = Axis3(figxyz[1, 1],
+        title="Lorenz Attractor (Phase Space x y z)\n\n",
+        xlabel="Convection (x)",
+        ylabel="Horizontal (y)",
+        zlabel="Vertical (z)",
+        azimuth=-0.2π)
 
-	lines!(axxyz, x, y, z, linewidth = 2)
-	scatter!(axxyz, convection, horizontal, vertical, color = :red, markersize = 2)
-	figxyz
+    lines!(axxyz, x, y, z, linewidth=2)
+    scatter!(axxyz, convection, horizontal, vertical, color=:red, markersize=2)
+    figxyz
 end
 
 # ╔═╡ 23ffe24e-95dd-496a-b0ba-fd2420543dc9
 begin
-	figl = Figure()
+    figl = Figure()
 
-	axl = Axis(figl[1, 1],
-		title = "Lorenz System",
-		xlabel = "t",
-		ylabel = "u")
+    axl = Axis(figl[1, 1],
+        title="Lorenz System",
+        xlabel="t",
+        ylabel="u")
 
-	labels2 = ["Convection (x)" "Horizontal (y)" "Vertical (z)"]
+    labels2 = ["Convection (x)" "Horizontal (y)" "Vertical (z)"]
 
-	for (col, label) in enumerate(labels2)
-		lines!(axl, t, soll_u_matrix[:, col], linewidth = 2, label = label)
-	end
+    for (col, label) in enumerate(labels2)
+        lines!(axl, t, soll_u_matrix[:, col], linewidth=2, label=label)
+    end
 
-	figl
+    figl
 end
 
 # ╔═╡ 0a80db8d-7d77-4fb8-8f1c-a1820939d027

@@ -7,7 +7,11 @@ using InteractiveUtils
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
     quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local iv = try
+            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
+        catch
+            b -> missing
+        end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
@@ -16,9 +20,9 @@ end
 
 # ╔═╡ aaaa0553-0b07-4fcf-a249-d48fd3a623cf
 begin
-	using Pkg
-	Pkg.activate()
-	Pkg.instantiate()
+    using Pkg
+    Pkg.activate()
+    Pkg.instantiate()
 end
 
 # ╔═╡ 85838d71-5f65-4e17-8c00-87cf7a1b58ee
@@ -127,10 +131,10 @@ md"### Assign Variables"
 md"#### du: Velocity in Meters per Second"
 
 # ╔═╡ 7be99dc3-a454-4ee2-8781-17bb798ed3ef
-md"$\cos \theta = \frac{\text{adjacent}}{\text{hypotenuse}} = \frac{vx}{v}$"
+md"$\cos θ = \frac{\text{adjacent}}{\text{hypotenuse}} = \frac{vx}{v}$"
 
 # ╔═╡ 535c3260-0f85-461b-851c-e67aa08e5d7b
-md"$\sin \theta = \frac{\text{opposite}}{\text{hypotenuse}} = \frac{vy}{v}$"
+md"$\sin θ = \frac{\text{opposite}}{\text{hypotenuse}} = \frac{vy}{v}$"
 
 # ╔═╡ a301fb45-1d35-4db5-8522-aadce039f554
 md"#### u: Position in Meters"
@@ -164,11 +168,11 @@ md"### Plot Solution"
 
 # ╔═╡ 53b7e346-9b05-4470-9b11-02b10c98a0d8
 if select_g == "Moon"
-	g = g_MOON
+    g = g_MOON
 elseif select_g == "Mars"
-	g = g_MARS
+    g = g_MARS
 else
-	g = g_EARTH
+    g = g_EARTH
 end
 
 # ╔═╡ 45365e48-fba2-4d3a-8d01-4f4f3637d0ac
@@ -217,35 +221,35 @@ y Velocity (m/s): $(round(sol(t_end)[2]; digits = 2))
 
 # ╔═╡ 7a472404-d82d-41fe-b2d8-6812065a11cf
 begin
-	fig = Figure()
+    fig = Figure()
 
-	ax = Axis(fig[1, 1],
-		title = "Projectile Motion (All Values)",
-		xlabel = "Time in Seconds",
-		ylabel = "Velocity (m/s) | Position (m)")
+    ax = Axis(fig[1, 1],
+        title="Projectile Motion (All Values)",
+        xlabel="Time in Seconds",
+        ylabel="Velocity (m/s) | Position (m)")
 
-	labels = ["x Velocity", "y Velocity", "x Position", "y Position"]
+    labels = ["x Velocity", "y Velocity", "x Position", "y Position"]
 
-	for (col, label) in enumerate(labels)
-		lines!(ax, sol.t, sol[col, :], linewidth = 2, label = label)
-	end
+    for (col, label) in enumerate(labels)
+        lines!(ax, sol.t, sol[col, :], linewidth=2, label=label)
+    end
 
-	axislegend()
-	fig
+    axislegend()
+    fig
 end
 
 # ╔═╡ c75c69ff-221a-4aca-a583-c1511f6cb265
 begin
-	fig2 = Figure()
+    fig2 = Figure()
 
-	ax2 = Axis(fig2[1, 1],
-		title = "Projectile Motion (Trajectory)",
-		xlabel = "x Position (m)",
-		ylabel = "y Position (m)")
+    ax2 = Axis(fig2[1, 1],
+        title="Projectile Motion (Trajectory)",
+        xlabel="x Position (m)",
+        ylabel="y Position (m)")
 
-	lines!(ax2, sol[3, :], sol[4, :], linewidth = 2)
+    lines!(ax2, sol[3, :], sol[4, :], linewidth=2)
 
-	fig2
+    fig2
 end
 
 # ╔═╡ c9482118-4c14-4a27-a7e4-ed3d2b51e0c5
@@ -316,10 +320,10 @@ md"### Define Julia Function"
 
 # ╔═╡ 12684fb2-b778-42a8-923a-616691b03f93
 function harmonic(du, u, p, t)
-	dx = du
-	x = u
-	k, m = p
-	-(k / m) * x
+    dx = du
+    x = u
+    k, m = p
+    -(k / m) * x
 end
 
 # ╔═╡ 9f793759-296a-4d30-85d4-9a7a910136f6
@@ -360,11 +364,11 @@ md"### Plot Solution"
 
 # ╔═╡ 2ba83fcc-ea8f-4962-9365-cac38790a9ff
 begin
-	reset
-	md"""
-	Time (seconds): $(@bind tm_end Slider(0.0:0.01:20.0, 20.0, true)) |
-	Initial Position (m): $(@bind xx_begin Slider(-0.25:0.01:0.25, 0.25, true))
-	"""
+    reset
+    md"""
+    Time (seconds): $(@bind tm_end Slider(0.0:0.01:20.0, 20.0, true)) |
+    Initial Position (m): $(@bind xx_begin Slider(-0.25:0.01:0.25, 0.25, true))
+    """
 end
 
 # ╔═╡ ee5bdd91-16a0-462c-ad19-90fbfe9a6298
@@ -372,11 +376,11 @@ tmspan = (t_begin, tm_end)
 
 # ╔═╡ 47a4fdc2-cd81-44c7-be6f-1c688cdf4df1
 begin
-	reset
-	md"""
-	Spring Constant (N/m): $(@bind k Slider(0.5:0.01:2.0, 1.0, true)) |
-	Mass (kg): $(@bind m Slider(0.5:0.01:2.0, 1.0, true))
-	"""
+    reset
+    md"""
+    Spring Constant (N/m): $(@bind k Slider(0.5:0.01:2.0, 1.0, true)) |
+    Mass (kg): $(@bind m Slider(0.5:0.01:2.0, 1.0, true))
+    """
 end
 
 # ╔═╡ 84ddfbe3-11bb-4f39-8ef1-bd7c1382611b
@@ -399,37 +403,37 @@ acceleration = -k / m * position
 
 # ╔═╡ 99b4bef8-85be-4380-9680-7af0db0cb4f9
 begin
-	fig3 = Figure()
+    fig3 = Figure()
 
-	ax3 = Axis(fig3[1, 1],
-		title = "Simple Harmonic Motion (All Values)",
-		xlabel = "Time (seconds)",
-		ylabel = "Velocity (m/s) | Position (m)")
+    ax3 = Axis(fig3[1, 1],
+        title="Simple Harmonic Motion (All Values)",
+        xlabel="Time (seconds)",
+        ylabel="Velocity (m/s) | Position (m)")
 
-	labels2 = ["Position", "Velocity"]
+    labels2 = ["Position", "Velocity"]
 
-	for (col, label) in enumerate(labels2)
-		lines!(ax3, solm.t, solm[col, :], linewidth = 2, label = label)
-	end
+    for (col, label) in enumerate(labels2)
+        lines!(ax3, solm.t, solm[col, :], linewidth=2, label=label)
+    end
 
-	fig3
+    fig3
 end
 
 # ╔═╡ d1df8bd7-6069-4081-8eb5-d33b1372a385
 begin
-	fig4 = Figure()
+    fig4 = Figure()
 
-	ax4 = Axis(fig4[1, 1],
-		title = "Simple Harmonic Motion (Phase Space)",
-		xlabel = "Position (m)",
-		ylabel = "Velocity (m/s)")
+    ax4 = Axis(fig4[1, 1],
+        title="Simple Harmonic Motion (Phase Space)",
+        xlabel="Position (m)",
+        ylabel="Velocity (m/s)")
 
-	lines!(ax4, solm[2, :], solm[1, :], linewidth = 2)
-	scatter!(ax4, position, velocity, color = :red, markersize = 10)
-	xlims!(ax4, -0.5, 0.5)
-	ylims!(ax4, -0.5, 0.5)
+    lines!(ax4, solm[2, :], solm[1, :], linewidth=2)
+    scatter!(ax4, position, velocity, color=:red, markersize=10)
+    xlims!(ax4, -0.5, 0.5)
+    ylims!(ax4, -0.5, 0.5)
 
-	fig4
+    fig4
 end
 
 # ╔═╡ 33f9126d-1fd0-4b44-88cd-7e29dc5f6116

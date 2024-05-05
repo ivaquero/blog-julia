@@ -7,7 +7,11 @@ using InteractiveUtils
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
     quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local iv = try
+            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
+        catch
+            b -> missing
+        end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
@@ -16,9 +20,9 @@ end
 
 # ╔═╡ 680cfeeb-3159-465d-9df2-f632edbe8ceb
 begin
-	using Pkg
-	Pkg.activate()
-	Pkg.instantiate()
+    using Pkg
+    Pkg.activate()
+    Pkg.instantiate()
 end
 
 # ╔═╡ 34e60bb1-7e43-459a-ba02-08b63ea092d1
@@ -52,7 +56,7 @@ md"### Find Derivative"
 md"$\frac{dy}{dx} = f'(x) = \dot{y}$"
 
 # ╔═╡ de59c452-8f1a-4469-9917-3b1f8d1fcc4b
-md"$f'(x) = \lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h}$"
+md"$f'(x) = \lim_{h → 0} \frac{f(x + h) - f(x)}{h}$"
 
 # ╔═╡ 58eb7e22-be78-491a-b3fa-2754704ce616
 md"where $x$ is a fixed value of the function $f(x)$ and $h$ is a number close to zero."
@@ -115,18 +119,18 @@ x: $(x) | f(x): $(y) | f'(x): $(dydx)
 
 # ╔═╡ 5ff7c523-755a-492e-aa8a-029d58be7534
 begin
-	figf = Figure()
+    figf = Figure()
 
-	axf = Axis(figf[1, 1],
-		title = "Relationship between x, f(x) and f'(x)",
-		xlabel = "x",
-		ylabel = "f(x)")
+    axf = Axis(figf[1, 1],
+        title="Relationship between x, f(x) and f'(x)",
+        xlabel="x",
+        ylabel="f(x)")
 
-	lines!(axf, x_range, f.(x_range))
-	lines!(axf, [x_left, x_right], [y_left, y_right], linewidth = 2, color = :red)
-	scatter!(x, y, markersize = 20, strokecolor = :black, strokewidth = 2, color = :lightgreen)
+    lines!(axf, x_range, f.(x_range))
+    lines!(axf, [x_left, x_right], [y_left, y_right], linewidth=2, color=:red)
+    scatter!(x, y, markersize=20, strokecolor=:black, strokewidth=2, color=:lightgreen)
 
-	figf
+    figf
 end
 
 # ╔═╡ 66ab1dba-19ed-4b89-9458-3b5872109ad5
@@ -197,39 +201,39 @@ b: $(@bind b Slider(0.0:0.01:4.0, 4.0, true))
 xs = a < b ? (a:0.01:b) : (b:0.01:a)
 
 # ╔═╡ 5e8a4df3-5333-4632-85ff-db37d3299ae0
-ya = round(f2(a), digits = 2)
+ya = round(f2(a), digits=2)
 
 # ╔═╡ 960b3129-c171-453c-a0fd-0ae9eb1cd9ff
-yb = round(f2(b), digits = 2)
+yb = round(f2(b), digits=2)
 
 # ╔═╡ b7a108c5-1285-45fb-8e49-f7f30ed9b5bd
-dyda = round(ForwardDiff.derivative(f2, a), digits = 2)
+dyda = round(ForwardDiff.derivative(f2, a), digits=2)
 
 # ╔═╡ 46853a59-61f6-47f1-b6a9-e56b95a43f1b
-dydb = round(ForwardDiff.derivative(f, b), digits = 2)
+dydb = round(ForwardDiff.derivative(f, b), digits=2)
 
 # ╔═╡ c9c26468-66c0-4ab5-ae3e-a01ba940669a
 area, area_error = quadgk(f2, a, b)
 
 # ╔═╡ 2725cbf6-7002-4701-897f-6debdbc393d2
-A2 = round(area, digits = 2)
+A2 = round(area, digits=2)
 
 # ╔═╡ f5753df4-7186-4b29-b825-e496d8ae3461
 begin
-	figi = Figure()
+    figi = Figure()
 
-	axi = Axis(figi[1, 1],
-		title = "Numerical Integration",
-		xlabel = "x",
-		ylabel = "f(x)")
+    axi = Axis(figi[1, 1],
+        title="Numerical Integration",
+        xlabel="x",
+        ylabel="f(x)")
 
-	lines!(axi, xs, f2.(xs), linewidth = 10, color = :red)
-	band!(axi, xs, 0, f2.(xs), color = :lightblue)
-	hlines!([0], linewidth = 2, color = :green)
-	xlims!(0, 4)
-	ylims!(0, 2)
+    lines!(axi, xs, f2.(xs), linewidth=10, color=:red)
+    band!(axi, xs, 0, f2.(xs), color=:lightblue)
+    hlines!([0], linewidth=2, color=:green)
+    xlims!(0, 4)
+    ylims!(0, 2)
 
-	figi
+    figi
 end
 
 # ╔═╡ 32ac36a6-435c-42af-a42b-18d5c955a8d2
@@ -254,7 +258,7 @@ md"$S = \int_{a}^{b} 2 \pi f(x) \sqrt{1 + \left( \frac{dy}{dx} \right)^2} \text{
 volume, volume_error = quadgk(x -> π * f2(x)^2, a, b)
 
 # ╔═╡ 058ccc42-6bd0-4d89-96f7-ec9ff99ce215
-V = round(volume, digits = 2)
+V = round(volume, digits=2)
 
 # ╔═╡ 48fcc02a-b14c-45a8-a855-8a3ed385525b
 md"""
@@ -264,36 +268,36 @@ Area: $(A2) | Volume (x-axis): $(V)
 
 # ╔═╡ 756c841c-9fb0-4cd6-a21b-e154558c0749
 function plotcircles!(ax, a, b)
-	for x in LinRange(a, b, 20)
-		θ = LinRange(0, 2π, 360)
-		lines!(ax,
-			fill(x, 360),
-			f2(x) * cos.(θ),
-			f2(x) * sin.(θ),
-			linewidth = 2,
-			color = :dodgerblue)
-	end
+    for x in LinRange(a, b, 20)
+        θ = LinRange(0, 2π, 360)
+        lines!(ax,
+            fill(x, 360),
+            f2(x) * cos.(θ),
+            f2(x) * sin.(θ),
+            linewidth=2,
+            color=:dodgerblue)
+    end
 end
 
 # ╔═╡ 38d5a7d3-d60d-4cdb-be14-37f7d1bc0636
 begin
-	figi3 = Figure()
+    figi3 = Figure()
 
-	axi3 = Axis3(figi3[1, 1],
-		title = "Revolution Around X-Axis",
-		xlabel = "x",
-		ylabel = "y",
-		zlabel = "z",
-		aspect = :data,
-		azimuth = -0.3π)
+    axi3 = Axis3(figi3[1, 1],
+        title="Revolution Around X-Axis",
+        xlabel="x",
+        ylabel="y",
+        zlabel="z",
+        aspect=:data,
+        azimuth=-0.3π)
 
-	plotcircles!(axi3, a, b)
-	lines!(axi3, [0, 4], [0, 0], [0, 0], color = :black)
-	xlims!(0, 4),
-	ylims!(-2, 2),
-	zlims!(-2, 2)
+    plotcircles!(axi3, a, b)
+    lines!(axi3, [0, 4], [0, 0], [0, 0], color=:black)
+    xlims!(0, 4),
+    ylims!(-2, 2),
+    zlims!(-2, 2)
 
-	figi3
+    figi3
 end
 
 # ╔═╡ 9c7c27c7-6808-42a6-8555-8673898213d0
@@ -304,10 +308,10 @@ md"$s = ∫_{a}^{b}\sqrt{1 + \left(\frac{dy}{dx}\right)^2} dx$"
 
 # ╔═╡ 4398d534-bdc9-431f-b28a-40ca27a2d6af
 arc_length, arc_error = quadgk(x -> sqrt(1 + ForwardDiff.derivative(f2, x)^2),
-	a, b)
+    a, b)
 
 # ╔═╡ f6fc8569-3a55-489d-8f02-cfbbc6210d78
-s = round(arc_length, digits = 2)
+s = round(arc_length, digits=2)
 
 # ╔═╡ b15f1c01-6d26-4e45-8ff0-61a41778aa81
 md"### Area of a Surface of Revolution (around x-axis)"
@@ -317,10 +321,10 @@ md"$S = ∫_{a}^{b} 2πf(x) \sqrt{1 + \left(\frac{dy}{dx}\right)^2}dx$"
 
 # ╔═╡ efbdee04-f922-432e-a374-10044b77bab1
 surface_area, surface_error = quadgk(x -> 2 * pi * f2(x) * sqrt(1 + ForwardDiff.derivative(f2, x)^2),
-	a, b)
+    a, b)
 
 # ╔═╡ e5fb18a0-01ef-4584-8c4c-dcd7eb7c9ee2
-S = round(surface_area, digits = 2)
+S = round(surface_area, digits=2)
 
 # ╔═╡ 65250eb6-92a8-4f8c-80b6-bc3ad8b2cde9
 md"""
