@@ -1,0 +1,92 @@
+---
+title: Notes
+subtitle: Learning Julia
+author:
+  - ivaquero
+
+html-license: <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+tex-license: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+
+# An example additional header include for html.
+# Note that the url will be updated by \`Books.fix_links\`.
+header-includes:
+- |
+  \`\`\`{=html}
+  <link rel="stylesheet" href="/files/style.css"/>
+  \`\`\`
+mousetrap: true
+
+html-license: <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+tex-license: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+
+# Avoid adding a blank page before each chapter.
+disable-cleardoublepage: true
+
+#
+# PDF only settings.
+#
+pdf-footer: ""
+
+geometry:
+  # Defaulting to large pages to be able to show 92 chars in code blocks.
+  - paperheight=10in # 25.4 cm.
+  - paperwidth=7in # 17.78 cm.
+  - marginparwidth=30mm
+  - marginparsep=2mm
+  - bindingoffset=10mm
+  - top=10mm
+  - inner=8mm
+  - outer=8mm
+  - bottom=16mm
+  - includehead
+  - includemp
+
+# A setting for the PDF. I don't know whether it is important.
+lang: en-US
+
+# Uncomment the following to enable a Chinese/Japanese/Korean (CJK) font.
+# CJKmainfont: Noto Serif CJK SC
+
+links-as-notes: true
+
+tags: [pandoc, Books.jl, JuliaLang]
+number-sections: true
+
+code-block-font-size: \scriptsize
+
+titlepage: true
+linkReferences: true
+link-citations: true
+
+# These table of contents settings only affect the PDF.
+toc: true
+tocdepth: 1
+
+# Cross-reference prefixes.
+eqnPrefix: Equation
+figPrefix: Figure
+tblPrefix: Table
+secPrefix: Section
+
+# Keyboard shortcuts.
+mousetrap: true
+
+header-left: foobar
+
+# For example, to add extra packages.
+extra-pdf-header: |
+  \usepackage{cancel}
+
+bibliography: files/bibliography.bib
+
+# Only used in PDF.
+titlepage-top: >
+  \begin{tabular}{l}
+  ivaquero \\
+  In the Clouds\\
+  \\
+  \end{tabular}
+
+titlepage-bottom: >
+  \url{https://github.com/ivaquero/ivaquero.github.io}
+---
