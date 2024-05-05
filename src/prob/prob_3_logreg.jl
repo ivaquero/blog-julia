@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.36
+# v0.19.41
 
 using Markdown
 using InteractiveUtils
@@ -98,7 +98,7 @@ end
 md"## Wolfspider"
 
 # ╔═╡ 76c92bce-dd07-42d9-98ca-5343127f2623
-wolfspider = CSV.File("data/wolfspider.csv")
+wolfspider = CSV.File("../data/wolfspider.csv")
 
 # ╔═╡ 01a83359-e819-42d1-9159-a325a2a30a7a
 spider_x = wolfspider.feature

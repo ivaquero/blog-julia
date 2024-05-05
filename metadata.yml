@@ -7,18 +7,11 @@ author:
 html-license: <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
 tex-license: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
 
+repo: https://github.com/ivaquero/blog-Julia
+
 # An example additional header include for html.
 # Note that the url will be updated by \`Books.fix_links\`.
-header-includes:
-- |
-  \`\`\`{=html}
-  <link rel="stylesheet" href="/files/style.css"/>
-  \`\`\`
-mousetrap: true
-
-html-license: <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
-tex-license: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
-
+header-includes: ""
 # Avoid adding a blank page before each chapter.
 disable-cleardoublepage: true
 
@@ -26,20 +19,24 @@ disable-cleardoublepage: true
 # PDF only settings.
 #
 pdf-footer: ""
+header-left: ""
 
-geometry:
-  # Defaulting to large pages to be able to show 92 chars in code blocks.
-  - paperheight=10in # 25.4 cm.
-  - paperwidth=7in # 17.78 cm.
-  - marginparwidth=30mm
-  - marginparsep=2mm
-  - bindingoffset=10mm
-  - top=10mm
-  - inner=8mm
-  - outer=8mm
-  - bottom=16mm
-  - includehead
-  - includemp
+# For example, to add extra packages.
+extra-pdf-header: |
+  \usepackage{cancel}
+
+# bibliography:
+
+# Only used in PDF.
+titlepage-top: >
+  \begin{tabular}{l}
+  ivaquero \\
+  In the Clouds\\
+  \\
+  \end{tabular}
+
+titlepage-bottom: >
+  \url{https://github.com/ivaquero/ivaquero.github.io}
 
 # A setting for the PDF. I don't know whether it is important.
 lang: en-US
@@ -49,7 +46,7 @@ lang: en-US
 
 links-as-notes: true
 
-tags: [pandoc, Books.jl, JuliaLang]
+tags: [pandoc, JuliaLang]
 number-sections: true
 
 code-block-font-size: \scriptsize
@@ -70,23 +67,4 @@ secPrefix: Section
 
 # Keyboard shortcuts.
 mousetrap: true
-
-header-left: foobar
-
-# For example, to add extra packages.
-extra-pdf-header: |
-  \usepackage{cancel}
-
-bibliography: files/bibliography.bib
-
-# Only used in PDF.
-titlepage-top: >
-  \begin{tabular}{l}
-  ivaquero \\
-  In the Clouds\\
-  \\
-  \end{tabular}
-
-titlepage-bottom: >
-  \url{https://github.com/ivaquero/ivaquero.github.io}
 ---

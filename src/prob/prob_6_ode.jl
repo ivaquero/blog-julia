@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.36
+# v0.19.41
 
 using Markdown
 using InteractiveUtils
@@ -220,7 +220,7 @@ end
 md"## Bayesian Model"
 
 # ╔═╡ a2717d8e-cfdf-4528-b013-6bb7bbb9be01
-data = CSV.File("data/baboons_cheetahs.csv";
+data = CSV.File("../data/baboons_cheetahs.csv";
 	header = false) |> CSV.Tables.matrix
 
 # ╔═╡ 623877ad-7c1a-4013-a602-9e4af23b530f

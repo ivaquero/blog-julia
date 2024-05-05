@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.36
+# v0.19.41
 
 using Markdown
 using InteractiveUtils
@@ -43,7 +43,7 @@ TableOfContents()
 md"## Pollen"
 
 # ╔═╡ d92adcb8-4669-4da4-9942-cf68fd62ed59
-pollen = CSV.read("data/pollen_meds.csv", DataFrame)
+pollen = CSV.read("../data/pollen_meds.csv", DataFrame)
 
 # ╔═╡ 6cadafed-5256-4093-a49a-21659efca463
 md"### Split Data"

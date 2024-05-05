@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.36
+# v0.19.41
 
 using Markdown
 using InteractiveUtils
@@ -155,7 +155,7 @@ end
 md"## Height vs. Weight"
 
 # ╔═╡ 8294f363-2193-4f49-af23-0abd153594b0
-howell1 = CSV.read("data/Howell1.csv", DataFrame, delim = ';')
+howell1 = CSV.read("../data/Howell1.csv", DataFrame, delim = ';')
 
 # ╔═╡ 669f277e-37be-471b-8a85-a148cb7b67f0
 howell1_adult = howell1[howell1.age .>= 18, :]

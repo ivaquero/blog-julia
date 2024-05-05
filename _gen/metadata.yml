@@ -1,0 +1,44 @@
+titlepage-top: "\\begin{tabular}{l} ivaquero \\\\ In the Clouds\\\\ \\\\ \\end{tabular}\n"
+linkReferences: true
+pdf-footer: ""
+author:
+  - "ivaquero"
+secPrefix: "Section"
+tex-license: "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"
+header-left: ""
+html-license: |-
+  <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+code-block-font-size: "\\scriptsize"
+links-as-notes: true
+link-citations: true
+title: "Notes"
+lang: "en-US"
+tags:
+  - "pandoc"
+  - "JuliaLang"
+disable-cleardoublepage: true
+tocdepth: 1
+toc: true
+titlepage: true
+titlepage-bottom: "\\url{https://github.com/ivaquero/ivaquero.github.io}\n"
+subtitle: "Learning Julia"
+repo: "https://github.com/ivaquero/blog-Julia"
+tblPrefix: "Table"
+geometry:
+  - "paperheight=10in"
+  - "paperwidth=7in"
+  - "marginparwidth=30mm"
+  - "marginparsep=2mm"
+  - "bindingoffset=10mm"
+  - "top=10mm"
+  - "inner=8mm"
+  - "outer=8mm"
+  - "bottom=16mm"
+  - "includehead"
+  - "includemp"
+figPrefix: "Figure"
+eqnPrefix: "Equation"
+header-includes: ""
+extra-pdf-header: "\\usepackage{cancel}\n"
+mousetrap: true
+number-sections: true

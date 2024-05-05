@@ -3,40 +3,22 @@
   [projects.default]
 
   homepage_contents = "index"
-
   metadata_path = "metadata.yml"
 
   contents = [
+    "index"
   ]
+
+  # Extra directories to be copied.
+  extra_directories = [
+    "images",
+  ]
+
+  # Port used by serve()
+  port = 8010
 
   # Output filename for the PDF.
   output_filename = "analysis"
 
   # Full URL, required for the sitemap and robots.txt.
   online_url = "https://github.com/ivaquero/ivaquero.github.io"
-  online_url_prefix = "/Books.jl"
-
-  # Extra directories to be copied.
-  extra_directories = [
-    "images",
-    "files"
-  ]
-
-  # Port used by serve()
-  port = 8010
-
-  [projects.notes]
-  contents = [
-    "demo",
-    "notes",
-    "references"
-  ]
-
-  # This project is only used when testing Books.jl.
-  [projects.test]
-  contents = [
-    "test"
-  ]
-
-  online_url = "https://example.com"
-  online_url_prefix = "/Example.jl"
