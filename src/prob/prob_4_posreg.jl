@@ -7,7 +7,11 @@ using InteractiveUtils
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
     quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local iv = try
+            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
+        catch
+            b -> missing
+        end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
@@ -16,8 +20,8 @@ end
 
 # ╔═╡ f636175b-3889-4b73-bc2f-355cd8d0b4d1
 begin
-	using Pkg
-	Pkg.activate()
+    using Pkg
+    Pkg.activate()
     Pkg.instantiate()
 end
 
@@ -31,7 +35,7 @@ using CSV, DataFrames, GLM
 using PlutoUI
 
 # ╔═╡ ef844473-6575-4c5d-a8d2-8af433c2ff20
-using PlutoUI:Slider
+using PlutoUI: Slider
 
 # ╔═╡ 6487462e-e13c-4e11-a4d0-ae772c69ce9c
 md"# Bayesian Possion Regression"
@@ -50,22 +54,22 @@ md"### Split Data"
 
 # ╔═╡ e08e74a4-cbac-49a0-962c-3d4342a7fda6
 noPollen_noMeds = pollen[
-    (pollen[:, :pollen] .== 0) .& (pollen[:, :meds] .== 0), :count
+    (pollen[:, :pollen].==0).&(pollen[:, :meds].==0), :count
 ]
 
 # ╔═╡ 15132c8d-5e3e-4487-b5b2-cca8da9f75bf
 noPollen_Meds = pollen[
-    (pollen[:, :pollen] .== 0) .& (pollen[:, :meds] .== 1), :count
+    (pollen[:, :pollen].==0).&(pollen[:, :meds].==1), :count
 ]
 
 # ╔═╡ 23a8037a-da6d-4666-aa84-3f088276c6b4
 Pollen_noMeds = pollen[
-    (pollen[:, :pollen] .== 1) .& (pollen[:, :meds] .== 0), :count
+    (pollen[:, :pollen].==1).&(pollen[:, :meds].==0), :count
 ]
 
 # ╔═╡ 91b78fe2-9ae1-4ea8-8e66-a96e6865554a
 Pollen_Meds = pollen[
-    (pollen[:, :pollen] .== 1) .& (pollen[:, :meds] .== 1), :count
+    (pollen[:, :pollen].==1).&(pollen[:, :meds].==1), :count
 ]
 
 # ╔═╡ 7f438b59-19c2-4a1f-a0f5-869d05801404
@@ -73,30 +77,30 @@ md"### Visualize Data"
 
 # ╔═╡ ed28511f-19b2-482f-89bb-bb7e03f93cc5
 begin
-	figps = Figure()
+    figps = Figure()
 
-	titles_p = [
-		"No Pollen, No Meds",
-		"No Pollen, Meds",
-		"Pollen, No Meds",
-		"Pollen, Meds"
-	]
+    titles_p = [
+        "No Pollen, No Meds",
+        "No Pollen, Meds",
+        "Pollen, No Meds",
+        "Pollen, Meds"
+    ]
 
-	data_p = [
-		noPollen_noMeds,
-		noPollen_Meds,
-		Pollen_noMeds,
-		Pollen_Meds
-	]
+    data_p = [
+        noPollen_noMeds,
+        noPollen_Meds,
+        Pollen_noMeds,
+        Pollen_Meds
+    ]
 
-	axs = [Axis(figps[row, col]) for row in 1:2, col in 1:2]
+    axs = [Axis(figps[row, col]) for row in 1:2, col in 1:2]
 
-	for (ind, ax) in enumerate(axs)
-		hist!(ax, data_p[ind])
-		ax.title = titles_p[ind]
-	end
+    for (ind, ax) in enumerate(axs)
+        hist!(ax, data_p[ind])
+        ax.title = titles_p[ind]
+    end
 
-	figps
+    figps
 end
 
 # ╔═╡ b7cfc059-fe7a-40f8-8f90-e65a1d0d14a4
@@ -161,22 +165,22 @@ ys2 = [log_transform(x) for x in xs]
 
 # ╔═╡ 4aa59993-c4f0-4fdd-930f-5e0dccd1239c
 begin
-	figl = Figure()
+    figl = Figure()
 
-	ax = Axis(figl[1, 1], title = "Line")
+    ax = Axis(figl[1, 1], title="Line")
 
-	lines!(ax, xs, ys1, linewidth = 3)
-	vlines!(ax, [0], color = :black)
+    lines!(ax, xs, ys1, linewidth=3)
+    vlines!(ax, [0], color=:black)
 
-	axl = Axis(figl[1, 2], title = "Log Transform")
+    axl = Axis(figl[1, 2], title="Log Transform")
 
-	lines!(axl, xs, ys2, linewidth = 3)
-	vlines!(axl, [0], color = :black)
+    lines!(axl, xs, ys2, linewidth=3)
+    vlines!(axl, [0], color=:black)
 
-	# xlims!(-10, 10)
-	# ylims!(-5, 5)
+    # xlims!(-10, 10)
+    # ylims!(-5, 5)
 
-	figl
+    figl
 end
 
 # ╔═╡ 4f1520c4-e249-449e-a82b-cfc40b66522f
@@ -189,7 +193,7 @@ md"## Define Model"
     pollen_x ~ Normal(0, 1)
     meds_x ~ Normal(0, 1)
     # likelihood
-    for i in 1:length(y)
+    for i in eachindex(y)
         line = intercept + pollen_x * X[i, 1] + meds_x * X[i, 2]
         log_transform = exp(line)
         y[i] ~ Poisson(log_transform)
@@ -213,40 +217,40 @@ chain_p = sample(pollen_m, sampler, samples)
 
 # ╔═╡ efb97d39-7166-4ef6-bafd-1597bb58ee57
 begin
-	figp = Figure()
+    figp = Figure()
 
-	titles = ["intercept", "pollen_x", "meds_x"]
+    titles = ["intercept", "pollen_x", "meds_x"]
 
-	for (ind, title) in enumerate(titles)
-		ax = Axis(
-			figp[ind, 1],
-	    	title = "$title",
-			xlabel="Iteration",
-			ylabel="Sample Values"
-		)
+    for (ind, title) in enumerate(titles)
+        ax = Axis(
+            figp[ind, 1],
+            title="$title",
+            xlabel="Iteration",
+            ylabel="Sample Values"
+        )
 
-		lines!(
-			ax,
-			1:samples,
-			chain_p[title][:,1],
-			color = (:lightblue, 0.8),
-		)
+        lines!(
+            ax,
+            1:samples,
+            chain_p[title][:, 1],
+            color=(:lightblue, 0.8),
+        )
 
-		ax2 = Axis(
-			figp[ind, 2],
-			title = "$title",
-			xlabel="Iteration",
-			ylabel="Sample Values"
-		)
+        ax2 = Axis(
+            figp[ind, 2],
+            title="$title",
+            xlabel="Iteration",
+            ylabel="Sample Values"
+        )
 
-		density!(
-			ax2,
-			chain_p[title][:,1],
-			color = (:lightblue, 0.8)
-		)
-	end
+        density!(
+            ax2,
+            chain_p[title][:, 1],
+            color=(:lightblue, 0.8)
+        )
+    end
 
-	figp
+    figp
 end
 
 # ╔═╡ 3cb8d428-e3c9-4011-b0d1-ecb0e3c17797
@@ -271,55 +275,55 @@ predictions = predict(predict_model, chain_p)
 
 # ╔═╡ 56ff6e03-4ead-474b-9efa-b7a07b35ea64
 begin
-	figpp = Figure(resolution = (800, 800))
+    figpp = Figure(resolution=(800, 800))
 
-	for ind in 1:4
-		ax = Axis(
-			figpp[ind, 1],
-	    	title = "y[$ind]",
-			xlabel="Iteration",
-			ylabel="Sample Values"
-		)
+    for ind in 1:4
+        ax = Axis(
+            figpp[ind, 1],
+            title="y[$ind]",
+            xlabel="Iteration",
+            ylabel="Sample Values"
+        )
 
-		lines!(
-			ax,
-			1:samples,
-			predictions["y[$ind]"][:,1],
-			color = (:lightblue, 0.8)
-		)
+        lines!(
+            ax,
+            1:samples,
+            predictions["y[$ind]"][:, 1],
+            color=(:lightblue, 0.8)
+        )
 
-		ax2 = Axis(
-			figpp[ind, 2],
-			title = "y[$ind]",
-			xlabel="Iteration",
-			ylabel="Sample Values"
-		)
+        ax2 = Axis(
+            figpp[ind, 2],
+            title="y[$ind]",
+            xlabel="Iteration",
+            ylabel="Sample Values"
+        )
 
-		hist!(
-			ax2,
-			predictions["y[$ind]"][:,1],
-			color = (:lightblue, 0.8)
-		)
-	end
+        hist!(
+            ax2,
+            predictions["y[$ind]"][:, 1],
+            color=(:lightblue, 0.8)
+        )
+    end
 
-	figpp
+    figpp
 end
 
 # ╔═╡ 3b588b4d-1bd4-42b2-b9f8-c37fd72a72e9
 begin
-	figx = Figure()
+    figx = Figure()
 
-	for ind in 1:4
-		ax = Axis(figx[ind, 1])
-		hist!(ax, data_p[ind])
-		ax.title = titles_p[ind]
+    for ind in 1:4
+        ax = Axis(figx[ind, 1])
+        hist!(ax, data_p[ind])
+        ax.title = titles_p[ind]
 
-		ax2 = Axis(figx[ind, 2])
-		hist!(ax2, predictions["y[$ind]"][:,1])
-		ax2.title = titles_p[ind]
-	end
+        ax2 = Axis(figx[ind, 2])
+        hist!(ax2, predictions["y[$ind]"][:, 1])
+        ax2.title = titles_p[ind]
+    end
 
-	figx
+    figx
 end
 
 # ╔═╡ Cell order:

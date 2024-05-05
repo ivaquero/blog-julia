@@ -7,7 +7,11 @@ using InteractiveUtils
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
     quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local iv = try
+            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
+        catch
+            b -> missing
+        end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
@@ -16,9 +20,9 @@ end
 
 # ╔═╡ 45758ef7-a24a-4e6a-8eba-b121abd70a17
 begin
-	using Pkg
-	Pkg.activate()
-	Pkg.instantiate()
+    using Pkg
+    Pkg.activate()
+    Pkg.instantiate()
 end
 
 # ╔═╡ e78e9fce-4fd2-4dc8-9fd6-80c906926e45
@@ -84,10 +88,10 @@ md"Define Julia Function"
 
 # ╔═╡ 730a4d87-58a6-4a8f-a911-1543a10c7f3e
 function lotka_volterra(du, u, p, t)
-	x, y = u
-	α, β, δ, γ = p
-	du[1] = dx = α * x - β * x * y
-	du[2] = dy = δ * x * y - γ * y
+    x, y = u
+    α, β, δ, γ = p
+    du[1] = dx = α * x - β * x * y
+    du[2] = dy = δ * x * y - γ * y
 end
 
 # ╔═╡ 9ed08a32-f22c-477b-972d-d8c3ca3eaed7
@@ -119,8 +123,8 @@ md"### Interactive Model"
 
 # ╔═╡ 6345b63f-76e1-4b1a-b8d1-ba11203cc573
 begin
-	reset
-	md"Time (t): $(@bind t_end Slider(0.0:0.1:10.0, 10.0, true))"
+    reset
+    md"Time (t): $(@bind t_end Slider(0.0:0.1:10.0, 10.0, true))"
 end
 
 # ╔═╡ 3b15ae68-f579-40fb-9dd0-e30c320b7a3b
@@ -128,13 +132,13 @@ tspan = (t_begin, t_end)
 
 # ╔═╡ 409f7e27-4f4c-4d5d-bdfd-352cab2436b5
 begin
-	reset
-	md"""
-	Initial Rabbit Population:
-		$(@bind x_begin Scrubbable(1:5, default = 1)) |
-	Initial Fox Population:
-		$(@bind y_begin Scrubbable(1:5, default = 1))
-	"""
+    reset
+    md"""
+    Initial Rabbit Population:
+    	$(@bind x_begin Scrubbable(1:5, default = 1)) |
+    Initial Fox Population:
+    	$(@bind y_begin Scrubbable(1:5, default = 1))
+    """
 end
 
 # ╔═╡ 9d54532d-75ad-40ef-a273-c422cdafdaba
@@ -142,11 +146,11 @@ u_begin = [x_begin, y_begin]
 
 # ╔═╡ c9799f34-eee6-4bbb-8d24-90eb3404368e
 begin
-	reset
-	md"""
-	- Rabbit Growth (α): $(@bind α Scrubbable(0.5:0.01:3.0, default = 2.0, format = ".2f")) || Rabbit Decline (β): $(@bind β Scrubbable(0.5:0.01:3.0, default = 1.2, format = ".2f"))
-	- Fox Growth (δ): $(@bind δ Scrubbable(0.5:0.01:3.0, default = 0.9, format = ".2f")) || Fox Decline (γ): $(@bind γ Scrubbable(0.5:0.01:3.0, default = 2.9, format = ".2f"))
-	"""
+    reset
+    md"""
+    - Rabbit Growth (α): $(@bind α Scrubbable(0.5:0.01:3.0, default = 2.0, format = ".2f")) || Rabbit Decline (β): $(@bind β Scrubbable(0.5:0.01:3.0, default = 1.2, format = ".2f"))
+    - Fox Growth (δ): $(@bind δ Scrubbable(0.5:0.01:3.0, default = 0.9, format = ".2f")) || Fox Decline (γ): $(@bind γ Scrubbable(0.5:0.01:3.0, default = 2.9, format = ".2f"))
+    """
 end
 
 # ╔═╡ 02f55723-0802-4428-8652-5ed888124cdf
@@ -176,22 +180,22 @@ Foxes: $(round(Int, fox))
 
 # ╔═╡ 7aaeaf6f-39b3-4724-9f3c-ea080cb12e14
 begin
-	fig = Figure()
+    fig = Figure()
 
-	ax = Axis(fig[1, 1],
-		title = "Lotka-Volterra Equations",
-		xlabel = "Time in Years",
-		ylabel = "Population")
+    ax = Axis(fig[1, 1],
+        title="Lotka-Volterra Equations",
+        xlabel="Time in Years",
+        ylabel="Population")
 
-	labels = ["Rabbits", "Foxes"]
+    labels = ["Rabbits", "Foxes"]
 
-	for (col, label) in enumerate(labels)
-		lines!(ax, sol.t, sol[col, :], linewidth = 2, label = label)
-	end
+    for (col, label) in enumerate(labels)
+        lines!(ax, sol.t, sol[col, :], linewidth=2, label=label)
+    end
 
-	axislegend()
+    axislegend()
 
-	fig
+    fig
 end
 
 # ╔═╡ e31d2dbe-be69-4767-89dc-df4b6fc43100
@@ -203,17 +207,17 @@ Foxes: $(round(Int, fox))
 
 # ╔═╡ 875253cb-c94b-4da1-8ef4-884b51f617ef
 begin
-	fig2 = Figure()
+    fig2 = Figure()
 
-	ax2 = Axis(fig2[1, 1],
-		title = "Lotka-Volterra Equations (Phase Space)",
-		xlabel = "Rabbits Population",
-		ylabel = "Foxes Population")
+    ax2 = Axis(fig2[1, 1],
+        title="Lotka-Volterra Equations (Phase Space)",
+        xlabel="Rabbits Population",
+        ylabel="Foxes Population")
 
-	lines!(ax2, sol[1, :], sol[2, :], linewidth = 2)
-	scatter!(ax2, rabbit, fox, color = :red, markersize = 15)
+    lines!(ax2, sol[1, :], sol[2, :], linewidth=2)
+    scatter!(ax2, rabbit, fox, color=:red, markersize=15)
 
-	fig2
+    fig2
 end
 
 # ╔═╡ 0f788ab0-1b80-4b9e-ad51-fe0b595bae37
@@ -221,36 +225,36 @@ md"## Bayesian Model"
 
 # ╔═╡ a2717d8e-cfdf-4528-b013-6bb7bbb9be01
 data = CSV.File("../data/baboons_cheetahs.csv";
-	header = false) |> CSV.Tables.matrix
+    header=false) |> CSV.Tables.matrix
 
 # ╔═╡ 623877ad-7c1a-4013-a602-9e4af23b530f
 ts = 0:0.1:10
 
 # ╔═╡ 1569a1da-ca65-43a0-9e0e-c5772688620d
 begin
-	fig3 = Figure()
-	ax3 = Axis(fig3[1, 1],
-		title = "Bayesian Differential Equations",
-		xlabel = "t",
-		ylabel = "Population")
+    fig3 = Figure()
+    ax3 = Axis(fig3[1, 1],
+        title="Bayesian Differential Equations",
+        xlabel="t",
+        ylabel="Population")
 
-	for ind in 1:2
-		lines!(ax3,
-			ts,
-			data[ind, :],
-			linewidth = 2,
-			linestyle = :dot,
-			label = labels[ind])
-	end
+    for ind in 1:2
+        lines!(ax3,
+            ts,
+            data[ind, :],
+            linewidth=2,
+            linestyle=:dot,
+            label=labels[ind])
+    end
 
-	axislegend()
+    axislegend()
 
-	# xlims!(0.0, 10.0)
-	# ylims!(0.0, 10.0)
-	# ax3.xticks(collect(0:10))
-	# ax3.yticks(collect(0:10))
+    # xlims!(0.0, 10.0)
+    # ylims!(0.0, 10.0)
+    # ax3.xticks(collect(0:10))
+    # ax3.yticks(collect(0:10))
 
-	fig3
+    fig3
 end
 
 # ╔═╡ ff8a878d-f446-46ba-9583-bdd29670213b
@@ -277,18 +281,18 @@ md"### Define Model"
 
 # ╔═╡ c8d3bdbf-0f5b-48c6-9c4d-3e3ac0635d27
 @model function lv_model(data, prob)
-	# prior
-	alpha ~ truncated(Normal(1.5, 1); lower = 0, upper = 5)
-	beta ~ truncated(Normal(1.5, 1); lower = 0, upper = 5)
-	delta ~ truncated(Normal(1.5, 1); lower = 0, upper = 5)
-	gamma ~ truncated(Normal(1.5, 1); lower = 0, upper = 5)
-	σ ~ Uniform(0, 1)
-	# likelihood
-	p = [alpha, beta, delta, gamma]
-	sol = solve(prob, Tsit5(); p = p, saveat = 0.1)
-	for i in 1:length(sol)
-		data[:, i] ~ MvNormal(sol[i], σ)
-	end
+    # prior
+    alpha ~ truncated(Normal(1.5, 1); lower=0, upper=5)
+    beta ~ truncated(Normal(1.5, 1); lower=0, upper=5)
+    delta ~ truncated(Normal(1.5, 1); lower=0, upper=5)
+    gamma ~ truncated(Normal(1.5, 1); lower=0, upper=5)
+    σ ~ Uniform(0, 1)
+    # likelihood
+    p = [alpha, beta, delta, gamma]
+    sol = solve(prob, Tsit5(); p=p, saveat=0.1)
+    for i in eachindex(sol)
+        data[:, i] ~ MvNormal(sol[i], σ)
+    end
 end
 
 # ╔═╡ 2cd7623d-0547-4617-9f55-9c4002f9ba0f
@@ -308,32 +312,32 @@ chain_lv = sample(model_lv, sampler, samples)
 
 # ╔═╡ a262b356-9749-4f76-ad2e-7eae6d53791d
 begin
-	fig4 = Figure(resolution = (800, 800))
+    fig4 = Figure(resolution=(800, 800))
 
-	params = ["alpha", "beta", "delta", "gamma", "σ"]
+    params = ["alpha", "beta", "delta", "gamma", "σ"]
 
-	for (ind, param) in enumerate(params)
-		ax = Axis(fig4[ind, 1],
-			title = "$param",
-			xlabel = "Iteration",
-			ylabel = "Sample Values")
+    for (ind, param) in enumerate(params)
+        ax = Axis(fig4[ind, 1],
+            title="$param",
+            xlabel="Iteration",
+            ylabel="Sample Values")
 
-		lines!(ax,
-			1:samples,
-			chain_lv[param][:, 1],
-			color = (:lightblue, 0.8))
+        lines!(ax,
+            1:samples,
+            chain_lv[param][:, 1],
+            color=(:lightblue, 0.8))
 
-		ax2 = Axis(fig4[ind, 2],
-			title = "$param",
-			xlabel = "Iteration",
-			ylabel = "Sample Values")
+        ax2 = Axis(fig4[ind, 2],
+            title="$param",
+            xlabel="Iteration",
+            ylabel="Sample Values")
 
-		density!(ax2,
-			chain_lv[param][:, 1],
-			color = (:lightblue, 0.8))
-	end
+        density!(ax2,
+            chain_lv[param][:, 1],
+            color=(:lightblue, 0.8))
+    end
 
-	fig4
+    fig4
 end
 
 # ╔═╡ 5fde2385-905d-4c16-bff5-8b2e3f5aad3e
@@ -344,59 +348,59 @@ md"sample from posterior distributions"
 
 # ╔═╡ 75a46c17-d19b-49fe-b09b-016c8a31b2de
 posterior_samples = sample(chain_lv[[:alpha, :beta, :delta, :gamma]], 300;
-	replace = false)
+    replace=false)
 
 # ╔═╡ a5f5ff09-8415-4231-915e-747c7a113edb
 md"visualize posterior samples"
 
 # ╔═╡ 9ef96240-9140-4ca7-85a9-4a5b3bef7d81
 begin
-	fig5 = Figure(resolution = (800, 800))
+    fig5 = Figure(resolution=(800, 800))
 
-	params2 = ["alpha", "beta", "delta", "gamma"]
+    params2 = ["alpha", "beta", "delta", "gamma"]
 
-	for (ind, param) in enumerate(params2)
-		ax = Axis(fig5[ind, 1],
-			title = "$param",
-			xlabel = "Iteration",
-			ylabel = "Sample Values")
+    for (ind, param) in enumerate(params2)
+        ax = Axis(fig5[ind, 1],
+            title="$param",
+            xlabel="Iteration",
+            ylabel="Sample Values")
 
-		lines!(ax,
-			1:300,
-			posterior_samples[param][:, 1],
-			color = (:lightblue, 0.8))
+        lines!(ax,
+            1:300,
+            posterior_samples[param][:, 1],
+            color=(:lightblue, 0.8))
 
-		ax2 = Axis(fig5[ind, 2],
-			title = "$param",
-			xlabel = "Iteration",
-			ylabel = "Sample Values")
+        ax2 = Axis(fig5[ind, 2],
+            title="$param",
+            xlabel="Iteration",
+            ylabel="Sample Values")
 
-		density!(ax2,
-			posterior_samples[param][:, 1],
-			color = (:lightblue, 0.8))
-	end
+        density!(ax2,
+            posterior_samples[param][:, 1],
+            color=(:lightblue, 0.8))
+    end
 
-	fig5
+    fig5
 end
 
 # ╔═╡ e3a6e693-a668-4953-ab56-8725e6425c89
 begin
-	fig6 = Figure()
+    fig6 = Figure()
 
-	ax6 = Axis(fig6[1, 1],
-		title = "Lotka-Volterra Equations (Phase Space)",
-		xlabel = "Rabbits Population",
-		ylabel = "Foxes Population")
+    ax6 = Axis(fig6[1, 1],
+        title="Lotka-Volterra Equations (Phase Space)",
+        xlabel="Rabbits Population",
+        ylabel="Foxes Population")
 
-	for ind in eachrow(Array(posterior_samples))
-		sol_samples = solve(prob, Tsit5(); p = ind, saveat = 0.1)
-		lines!(ax6, sol_samples;
-			label = "",
-			linewidth = 0.1,
-			colormap = (:Spectral, 0.5))
-	end
+    for ind in eachrow(Array(posterior_samples))
+        sol_samples = solve(prob, Tsit5(); p=ind, saveat=0.1)
+        lines!(ax6, sol_samples;
+            label="",
+            linewidth=0.1,
+            colormap=(:Spectral, 0.5))
+    end
 
-	fig6
+    fig6
 end
 
 # ╔═╡ Cell order:
