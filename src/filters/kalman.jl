@@ -98,7 +98,7 @@ Predict next state (prior) using the Kalman filter state propagation equations
 - `modify::Bool = true`: whether to modify the filter or return x, P
 """
 function predict(filter::KalmanFilter; u=filter.u, B=filter.B, F=filter.F, Q=filter.Q, modify::Bool=true)
-    if length(Q) == 1
+    if length(Q) === 1
         Q = I * Q
     end
 
@@ -138,7 +138,7 @@ Update `filter` with new measurement `z`.
 - `modify::Bool = true`: whether to modify the filter or return x, P
 """
 function update(filter::KalmanFilter, z::AbstractArray; R=filter.R, H=filter.H, modify::Bool=true)
-    if length(R) == 1
+    if length(R) === 1
         R = I * R
     end
 
@@ -203,22 +203,22 @@ function batch_filter(filter::KalmanFilter, zs; us=nothing, Fs=nothing, Qs=nothi
 
     n = size(zs)[1]
 
-    if us == nothing
+    if us === nothing
         us = fill(filter.u, n)
     end
-    if Fs == nothing
+    if Fs === nothing
         Fs = fill(filter.F, n)
     end
-    if Qs == nothing
+    if Qs === nothing
         Qs = fill(filter.Q, n)
     end
-    if Hs == nothing
+    if Hs === nothing
         Hs = fill(filter.H, n)
     end
-    if Rs == nothing
+    if Rs === nothing
         Rs = fill(filter.R, n)
     end
-    if Bs == nothing
+    if Bs === nothing
         Bs = fill(filter.B, n)
     end
 
@@ -243,14 +243,14 @@ computed by a Kalman filter (preferably using batch_filter()). Returns smoothed 
 """
 function rts_smoother(filter::KalmanFilter, Xs::AbstractArray, Ps::AbstractArray;
     Fs=nothing, Qs=nothing)
-    size(Xs)[1] == size(Ps)[1] || throw(DimensionMismatch("length of Xs and Ps must be the same"))
+    size(Xs)[1] === size(Ps)[1] || throw(DimensionMismatch("length of Xs and Ps must be the same"))
 
     n = size(Xs)[1]
 
-    if Fs == nothing
+    if Fs === nothing
         Fs = fill(filter.F, n)
     end
-    if Qs == nothing
+    if Qs === nothing
         Qs = fill(filter.Q, n)
     end
 

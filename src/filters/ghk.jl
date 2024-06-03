@@ -50,10 +50,10 @@ julia> update(ghf, 2.1, g=0.85, h=0.15)
 ```
 """
 function update(filter::GHFilter, z::FloatOrArray; g::FloatOrNothing=nothing, h::FloatOrNothing=nothing)
-    if g == nothing
+    if g === nothing
         g = filter.g
     end
-    if h == nothing
+    if h === nothing
         h = filter.h
     end
 
@@ -183,13 +183,13 @@ julia> update(filter, [12.0, 11.3, 105.9])
 ```
 """
 function update(filter::GHKFilter, z::FloatOrArray; g::FloatOrNothing=nothing, h::FloatOrNothing=nothing, k::FloatOrNothing=nothing)
-    if g == nothing
+    if g === nothing
         g = filter.g
     end
-    if h == nothing
+    if h === nothing
         h = filter.h
     end
-    if k == nothing
+    if k === nothing
         k = filter.k
     end
 
