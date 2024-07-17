@@ -19,4 +19,3 @@ layout: "md.jlmd"
 <div id="search-results">
 Loading...
 </div>
-

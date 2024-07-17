@@ -2,7 +2,7 @@
 
 # This Dockerfile does _not_ run the Pluto notebooks. You can _not_ use it to work on the homework exercises. Instead, take a look at our website to learn how to get started with Pluto: http://computationalthinking.mit.edu . If you want to run a Pluto Container (e.g. for homework) take a look here: https://github.com/JuliaPluto/docker-stacks
 
-# This is an internal Dockerfile for the Pluto "@bind server" for the course website. It runs all the sliders, buttons and camera inputs, so that you can interact with them directly on the website, without having to wait for binder or a local Pluto session. 
+# This is an internal Dockerfile for the Pluto "@bind server" for the course website. It runs all the sliders, buttons and camera inputs, so that you can interact with them directly on the website, without having to wait for binder or a local Pluto session.
 # Take a look at https://github.com/JuliaPluto/PlutoSliderServer.jl for more info.
 
 # -fonsi
@@ -20,7 +20,6 @@ WORKDIR /home/pluto
 USER pluto
 # copy the contents of the github repository into /home/pluto
 COPY --chown=pluto . ${HOME}
-
 
 # Initialize the julia project environment that will be used to run the bind server.
 RUN julia --project=${HOME}/pluto-deployment-environment -e "import Pkg; Pkg.instantiate(); Pkg.precompile()"
