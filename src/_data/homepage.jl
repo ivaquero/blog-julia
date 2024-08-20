@@ -10,7 +10,7 @@ Dict(
      "highlights" => [
           Dict("name" => "Learn Julia",
                "text" => md"""
-               A Set of Julia Notes of Julia Programming Language.**
+               A Set of Julia Notes of Julia Programming Language.
                """,
                "img" => ""
           )

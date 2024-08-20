@@ -7,6 +7,5 @@ Dict(
         "ivaquero" => "https://github.com/ivaquero",
     ],
     "institution" => "GitHub",
-    "institution_logo" => "doge.png",
     "repo" => "https://github.com/ivaquero/blog-julia"
 )
