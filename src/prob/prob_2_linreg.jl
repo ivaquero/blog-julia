@@ -15,8 +15,12 @@ using InteractiveUtils
 # ╔═╡ 92af5ce3-e6b7-47b4-afc0-7f68dabc66ad
 begin
     using Pkg
-    Pkg.activate("../../pluto-deployment-environment")
-    Pkg.instantiate()
+    if isdir("../../pluto-deployment-environment")
+        Pkg.activate("../../pluto-deployment-environment")
+        Pkg.instantiate()
+    else
+        println(pwd())
+    end
 end
 
 # ╔═╡ 2afc5904-5084-4d49-b2a7-9d52a58e2ba2

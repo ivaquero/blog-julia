@@ -30,8 +30,12 @@ md"# Bayesian Time Series"
 # ╔═╡ 00bd0968-a0de-4aad-8aa3-bf5d955682c6
 begin
     using Pkg
-    Pkg.activate("../../pluto-deployment-environment")
-    Pkg.instantiate()
+    if isdir("../../pluto-deployment-environment")
+        Pkg.activate("../../pluto-deployment-environment")
+        Pkg.instantiate()
+    else
+        println(pwd())
+    end
 end
 
 # ╔═╡ 52a8f7b1-ae66-4a34-97ff-f3b0e42afd75

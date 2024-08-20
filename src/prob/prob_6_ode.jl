@@ -15,7 +15,11 @@ using InteractiveUtils
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
     quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local iv = try
+            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
+        catch
+            b -> missing
+        end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
@@ -25,8 +29,12 @@ end
 # ╔═╡ 45758ef7-a24a-4e6a-8eba-b121abd70a17
 begin
     using Pkg
-    Pkg.activate("../../pluto-deployment-environment")
-    Pkg.instantiate()
+    if isdir("../../pluto-deployment-environment")
+        Pkg.activate("../../pluto-deployment-environment")
+        Pkg.instantiate()
+    else
+        println(pwd())
+    end
 end
 
 # ╔═╡ e78e9fce-4fd2-4dc8-9fd6-80c906926e45

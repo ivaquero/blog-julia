@@ -25,8 +25,12 @@ end
 # ╔═╡ da32c4aa-e936-4f1d-b327-d3396a0d06c3
 begin
     using Pkg
-    Pkg.activate("../../pluto-deployment-environment")
-    Pkg.instantiate()
+	if isdir("../../pluto-deployment-environment")
+    	Pkg.activate("../../pluto-deployment-environment")
+    	Pkg.instantiate()
+	else
+		println(pwd())
+	end
 end
 
 # ╔═╡ aaf27acb-a9e5-4674-8d66-4bb6bdbc44ba
