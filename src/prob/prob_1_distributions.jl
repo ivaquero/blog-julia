@@ -28,6 +28,7 @@ begin
 	if isdir("../../pluto-deployment-environment")
     	Pkg.activate("../../pluto-deployment-environment")
     	Pkg.instantiate()
+		Pkg.precompile("Distributions", strict=true)
 	else
 		println(pwd())
 	end
