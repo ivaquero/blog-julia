@@ -46,7 +46,7 @@ jobs:
           include("./generate.jl")'
 
       - name: 📰 Upload site generation report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           path: generation_report.html
