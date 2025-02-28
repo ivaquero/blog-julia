@@ -1,5 +1,5 @@
 {
-    "editor.formatOnSave": true,
-    "cmake.configureOnOpen": false,
-    "C_Cpp.errorSquiggles": "disabled",
+	"editor.formatOnSave": true,
+	"cmake.configureOnOpen": false,
+	"C_Cpp.errorSquiggles": "disabled"
 }
