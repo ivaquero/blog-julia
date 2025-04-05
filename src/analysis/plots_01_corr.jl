@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.4
+# v0.20.5
 
 #> [frontmatter]
 #> chapter = 1
@@ -20,7 +20,7 @@ begin
  end
 
 # ╔═╡ a6999fdb-d20a-4a13-b7e9-eee118eb98fa
-using TidierFiles, TidierData, TidierPlots
+using Tidier
 
 # ╔═╡ 07f923d3-3995-4915-a7f3-c236e6a6d0ea
 md"# Plot Correlation"
@@ -47,7 +47,7 @@ p3 = ggplot(ads, @aes(x = newspaper, y = sales)) +
      geom_smooth(method=:lm, linewidth=3, alpha=0.5)
 
 # ╔═╡ 636af518-6bdb-4c6c-ac03-d0971dfaa479
-p13 = (p1 + p2 + p3 + plot_layout(ncol=3, nrow=1, widths=[5, 5, 5], heights=[1]))
+p13 = (p1 + p2 + p3 + plot_layout(ncol=3, nrow=1, widths=[2, 2, 2], heights=[1]))
 
 # ╔═╡ Cell order:
 # ╟─07f923d3-3995-4915-a7f3-c236e6a6d0ea
