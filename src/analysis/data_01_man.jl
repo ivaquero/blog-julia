@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.5
 
 #> [frontmatter]
 #> chapter = 1
@@ -24,7 +24,7 @@ begin
 end
 
 # ╔═╡ a6999fdb-d20a-4a13-b7e9-eee118eb98fa
-using TidierFiles, TidierData
+using Tidier
 
 # ╔═╡ 9d9047ab-150b-4e6f-a836-bb99625150bb
 using RDatasets

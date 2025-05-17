@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.5
 
 #> [frontmatter]
 #> chapter = 3
@@ -41,7 +41,7 @@ end
 using Turing, CairoMakie
 
 # ╔═╡ 11088891-2852-4bf6-a187-98d87c56a37c
-using TidierFiles, TidierData
+using Tidier
 
 # ╔═╡ bf89f22d-4083-4f91-86ee-c076b73b070a
 using GLM

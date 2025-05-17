@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.46
+# v0.20.5
 
 #> [frontmatter]
 #> chapter = 3
@@ -11,6 +11,17 @@
 
 using Markdown
 using InteractiveUtils
+
+# ╔═╡ 00bd0968-a0de-4aad-8aa3-bf5d955682c6
+begin
+    using Pkg
+    if isdir("../../pluto-deployment-environment")
+        Pkg.activate("../../pluto-deployment-environment")
+        Pkg.instantiate()
+    else
+        println(pwd())
+    end
+end
 
 # ╔═╡ fa222d31-8b6a-4df0-966b-10512c21b44c
 using PlutoUI
@@ -26,17 +37,6 @@ end
 
 # ╔═╡ de69211f-4b0c-4a32-af04-7e3378991006
 md"# Bayesian Time Series"
-
-# ╔═╡ 00bd0968-a0de-4aad-8aa3-bf5d955682c6
-begin
-    using Pkg
-    if isdir("../../pluto-deployment-environment")
-        Pkg.activate("../../pluto-deployment-environment")
-        Pkg.instantiate()
-    else
-        println(pwd())
-    end
-end
 
 # ╔═╡ 52a8f7b1-ae66-4a34-97ff-f3b0e42afd75
 TableOfContents()
