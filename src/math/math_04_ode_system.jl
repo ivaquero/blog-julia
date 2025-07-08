@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 2
@@ -14,16 +14,14 @@ using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
-    quote
-        local iv = try
-            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
-        catch
-            b -> missing
-        end
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ 835e13a7-badc-4bb4-92ee-61afa3972a71
@@ -162,7 +160,7 @@ md"##### Control Panel"
 # ╔═╡ ecff4935-d3cd-4ae4-b92a-00c172971b28
 begin
     preset
-    md"Time (s): $(@bind t_end Slider(0.0:0.01:100.0, 100.0, true))"
+    md"Time (s): $(@bind t_end Slider(0.0:0.01:100.0; default=100.0, show_value=true))"
 end
 
 # ╔═╡ c6ced053-87a0-4608-91d6-bc3ce8c5b574
@@ -465,7 +463,7 @@ md"#### Control Panel"
 # ╔═╡ 7b671c88-c649-455f-8149-7ac335b1753d
 begin
     reset3
-    @bind t3_end Slider(0.0:0.001:100.0, 100.0, true)
+    @bind t3_end Slider(0.0:0.001:100.0; default=100.0, show_value=true)
 end
 
 # ╔═╡ cd44fe85-8cda-4ca2-b97c-26147041d81c

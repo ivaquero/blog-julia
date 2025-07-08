@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 3
@@ -131,7 +131,7 @@ md"### Interactive Model"
 # ╔═╡ 6345b63f-76e1-4b1a-b8d1-ba11203cc573
 begin
     reset
-    md"Time (t): $(@bind t_end Slider(0.0:0.1:10.0, 10.0, true))"
+    md"Time (t): $(@bind t_end Slider(0.0:0.1:10.0; default=10.0, show_value=true))"
 end
 
 # ╔═╡ 3b15ae68-f579-40fb-9dd0-e30c320b7a3b

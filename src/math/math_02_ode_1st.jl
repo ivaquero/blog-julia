@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 2
@@ -14,16 +14,14 @@ using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
-    quote
-        local iv = try
-            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
-        catch
-            b -> missing
-        end
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ 42f2dc7e-b3db-4c45-8ba6-3a1470e01edc
@@ -107,16 +105,16 @@ md"### Solve Problem"
 md"### Plot Solution"
 
 # ╔═╡ f7124c0e-b647-42bf-a3b0-4859ff457f1f
-md"Years: $(@bind t_end Slider(1.0:50.0, 1.0, true))"
+md"Years: $(@bind t_end Slider(1.0:50.0; default=1, show_value=true))"
 
 # ╔═╡ 503e6643-069a-440b-b8f2-21c6a9f623a2
 tspan = (t_begin, t_end)
 
 # ╔═╡ 242a0d36-7b52-4f34-a084-5c7c2d85550d
-md"Interest Rate: $(@bind p Slider(0.01:0.01:1.0, 1.0, true))"
+md"Interest Rate: $(@bind p Slider(0.01:0.01:1.0; default=1, show_value=true))"
 
 # ╔═╡ 2f8255fc-59ae-4c49-bd77-5702c743cfa2
-md"Beginning Balance: $(@bind u_begin Slider(1.0:1000.0, 1.0, true))"
+md"Beginning Balance: $(@bind u_begin Slider(1.0:1000.0; default=1, show_value=true))"
 
 # ╔═╡ dae87a87-e3e2-480e-8ca3-04e2d9b11a96
 prob = ODEProblem(f, u_begin, tspan, p)
@@ -232,22 +230,22 @@ md"### Solve Problem"
 md"### Plot Solution"
 
 # ╔═╡ 1b2e68fc-cbb1-4da2-8ccf-f6d4f0c01cb1
-md"Maximum Population ($K$): $(@bind K Slider(100.0:200.0, 200.0, true))"
+md"Maximum Population ($K$): $(@bind K Slider(100.0:200.0; default=200, show_value=true))"
 
 # ╔═╡ 18e16cea-3474-48f2-8871-4a25700ed0da
-md"Months: $(@bind tv_end Slider(1.0:72.0, 72.0, true))"
+md"Months: $(@bind tv_end Slider(1.0:72.0; default=72, show_value=true))"
 
 # ╔═╡ fe38ae5a-4985-491e-8eef-b1689dcc8f9c
 tvspan = (tv_begin, tv_end)
 
 # ╔═╡ 71070eab-2de5-4899-b3cb-8a460ba13afe
-md"Growth Rate ($r$): $(@bind r Slider(0.01:0.01:1.0, 0.14, true))"
+md"Growth Rate ($r$): $(@bind r Slider(0.01:0.01:1.0; default=0.14, show_value=true))"
 
 # ╔═╡ af35dad9-dc2f-4c89-b52e-79c188fc777d
 pv = [r, K]
 
 # ╔═╡ e8280117-1592-4399-a335-23165329bf4d
-md"Beginning Population: $(@bind N_begin Slider(1.0:20.0, 1.0, true))"
+md"Beginning Population: $(@bind N_begin Slider(1.0:20.0; default=1.0, show_value=true))"
 
 # ╔═╡ eeef9e2d-9d8e-4e54-92fe-2f002c03acd3
 probv = ODEProblem(verhulst, N_begin, tvspan, pv)

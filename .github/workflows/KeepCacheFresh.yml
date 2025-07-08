@@ -1,7 +1,10 @@
 name: Keep caches fresh
 on:
   schedule:
-    - cron: "5 7 1/4 * *" # every 4 days
+    - cron: '5 7 1/4 * *' # every 4 days
+concurrency:
+  group: export
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:

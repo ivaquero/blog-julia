@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 2
@@ -14,16 +14,14 @@ using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
-    quote
-        local iv = try
-            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
-        catch
-            b -> missing
-        end
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ d3fde8a5-8cfe-49d4-af5d-2b5bd340f528
@@ -135,22 +133,22 @@ md"### Plot Solutions"
 md"#### Control Panel"
 
 # ╔═╡ 6bbfe9be-0fd2-4bdb-a8b9-8fcf8884c9ef
-md"Maximum Population ($K$): $(@bind K Slider(100.0:200.0, 200.0, true))"
+md"Maximum Population ($K$): $(@bind K Slider(100.0:200.0; default=200.0, show_value=true))"
 
 # ╔═╡ 329103af-22b2-479c-9f27-7f4e142ec7d3
-md"Months: $(@bind tv_end Slider(0.0:72.0, 72.0, true))"
+md"Months: $(@bind tv_end Slider(0.0:72.0; default=72.0, show_value=true))"
 
 # ╔═╡ d4be6a98-54c3-45d6-830a-fc32780ea838
 tvspan = (tv_begin, tv_end)
 
 # ╔═╡ 259c1360-3e41-42e9-992d-31424b29108e
-md"Beginning Population: $(@bind N_begin Slider(1.0:100.0, 1.0, true))"
+md"Beginning Population: $(@bind N_begin Slider(1.0:100.0; default=1.0, show_value=true))"
 
 # ╔═╡ ecf5f3ec-72d3-496a-9941-6c359f8b0de3
 @bind new_solv Button("New Solution")
 
 # ╔═╡ 34f7cd32-0456-4748-844c-8572e3724f78
-md"Growth Rate ($r$): $(@bind r Slider(0.1:0.01:1.0, 0.14, true))"
+md"Growth Rate ($r$): $(@bind r Slider(0.1:0.01:1.0; default=0.14, show_value=true))"
 
 # ╔═╡ d0c5e98c-23fe-4282-8d86-0b326bea853e
 pv = [r, K]
@@ -162,7 +160,7 @@ probv_ODE = ODEProblem(verhulst, N_begin, tvspan, pv)
 solv_ODE = solve(probv_ODE)
 
 # ╔═╡ f2f2ba06-b074-43bd-9a28-2729cb1a3c0c
-md"Volatility (beta): $(@bind βv Slider(0.0:0.01:0.1, 0.0, true))"
+md"Volatility (beta): $(@bind βv Slider(0.0:0.01:0.1; default=0.0, show_value=true))"
 
 # ╔═╡ fc5437c8-16d9-45ec-a39a-a6c4f862e081
 gv(uv, p, t) = βv * uv

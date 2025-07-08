@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 2
@@ -14,16 +14,14 @@ using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
-    quote
-        local iv = try
-            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
-        catch
-            b -> missing
-        end
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ 9f1b8143-4882-4a55-8d0a-e2a09e1e6269
@@ -186,7 +184,7 @@ md"### Control Panel"
 # ╔═╡ dd28ee23-cfc4-4b61-a5e4-f386e5974cfb
 begin
     reset
-    md"Time: $(@bind t_end Slider(0.0:0.001:1.0, 0.0, true))"
+    md"Time: $(@bind t_end Slider(0.0:0.001:1.0; default=0.0, show_value=true))"
 end
 
 # ╔═╡ e4696021-f124-4293-b824-ada27d2ecd5a
@@ -197,8 +195,8 @@ begin
     reset
     md"""
     Temperature ||
-    Left: $(@bind left_temp Slider(0.0:0.01:1.0, 0.9, true)) |
-    Right: $(@bind right_temp Slider(0.0:0.01:1.0, 0.1, true)) ||
+    Left: $(@bind left_temp Slider(0.0:0.01:1.0; default=0.9, show_value=true)) |
+    Right: $(@bind right_temp Slider(0.0:0.01:1.0; default=0.1, show_value=true)) ||
     """
 end
 
@@ -208,7 +206,7 @@ u_begin = [i < L / 2 ? left_temp : right_temp for i in x]
 # ╔═╡ b13e8490-6b04-493a-8bca-17fcdd994484
 begin
     reset
-    md"α: $(@bind α Slider(0.0:0.001:2.0, 0.5, true))"
+    md"α: $(@bind α Slider(0.0:0.001:2.0; default=0.5, show_value=true))"
 end
 
 # ╔═╡ c231f801-6423-4726-9324-be36a9f1a375

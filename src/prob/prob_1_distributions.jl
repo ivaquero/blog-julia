@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 3
@@ -60,10 +60,10 @@ md"## Continuous Distributions"
 md"### Normal Distribution"
 
 # ╔═╡ 0e4baa34-34d8-47ad-9b4a-34cff7863615
-md"Mean (μ): $(@bind μ Slider(-3.0:0.1:3.0, 0.0, true))"
+md"Mean (μ): $(@bind μ Slider(-3.0:0.1:3.0; default=0, show_value=true))"
 
 # ╔═╡ fb376e87-15a8-4363-942b-e36b83d73fdb
-md"Standard Deviation (σ): $(@bind σ Slider(0.5:0.01:3.0, 1.0, true))"
+md"Standard Deviation (σ): $(@bind σ Slider(0.5:0.01:3.0; default=1.0, show_value=true))"
 
 # ╔═╡ d72c319f-63cf-4ef7-9c39-8107a67b1828
 begin
@@ -87,10 +87,10 @@ end
 md"### Beta Distribution"
 
 # ╔═╡ b0128411-7b22-45c7-8bfb-3e2205cfd9a1
-md"α: $(@bind α Slider(0.1:0.1:5.0, 1.0, true))"
+md"α: $(@bind α Slider(0.1:0.1:5.0; default=1.0, show_value=true))"
 
 # ╔═╡ 6a2808f4-59a6-4182-81f2-567705493449
-md"β: $(@bind β Slider(0.1:0.1:5.0, 1.0, true))"
+md"β: $(@bind β Slider(0.1:0.1:5.0; default=1.0, show_value=true))"
 
 # ╔═╡ 4ed0a3c5-5124-4d5a-8d46-8e1a721f7660
 begin
@@ -118,10 +118,10 @@ end
 md"### Uniform Distribution"
 
 # ╔═╡ 6bc3bbd2-ab8e-4db1-949f-53ceaa10463a
-md"a: $(@bind ua Slider(-5.:1.0:3.0, 1.0, true))"
+md"a: $(@bind ua Slider(-5.:1.0:3.0; default=1.0, show_value=true))"
 
 # ╔═╡ 279df7fc-219a-461a-b359-c5b2cc9e7676
-md"b: $(@bind ub Slider(4:1.0:9, 1.0, true))"
+md"b: $(@bind ub Slider(4:1.0:9; default=1.0, show_value=true))"
 
 # ╔═╡ 2d52058a-e947-4f0d-a98c-0fee250d2def
 begin
@@ -150,7 +150,7 @@ md"## Discrete Distributions"
 md"### Bernoulli Distribution"
 
 # ╔═╡ ebbc484b-c5d7-4263-a0a3-d4e5d367f850
-md"Success Rate (p): $(@bind pb Slider(0.00:0.01:1.0, 0.5, true))"
+md"Success Rate (p): $(@bind pb Slider(0.00:0.01:1.0; default=0.5, show_value=true))"
 
 # ╔═╡ 1f76995f-7ab3-4739-b37d-47af87a14cff
 begin
@@ -181,10 +181,10 @@ end
 md"### Binomial Distribution"
 
 # ╔═╡ bc2dd470-8c03-41c1-ae9a-84f3f92882c2
-md"Number of Trials (n): $(@bind n Slider(1:1:10, 1, true))"
+md"Number of Trials (n): $(@bind n Slider(1:1:10; default=1.0, show_value=true))"
 
 # ╔═╡ 51a0937c-1e56-46ce-bb74-4e35b51e8bd3
-md"Probability of Success (p): $(@bind p Slider(0.00:0.01:1.0, 0.5, true))"
+md"Probability of Success (p): $(@bind p Slider(0.00:0.01:1.0; default=0.5, show_value=true))"
 
 # ╔═╡ cb546aaf-e442-4d5c-b6ac-6c0f41db54a1
 begin
@@ -214,7 +214,7 @@ end
 md"### Poisson Distribution"
 
 # ╔═╡ 1462928b-3c6a-4106-9c68-ce45f8267bc1
-md"Average Rate of Occurrences (λ): $(@bind λ Slider(1.0:0.1:10.0, 1.0, true))"
+md"Average Rate of Occurrences (λ): $(@bind λ Slider(1.0:0.1:10.0; default=1.0, show_value=true))"
 
 # ╔═╡ 507fe99c-4308-4916-8fbb-3aaf52d781f8
 begin

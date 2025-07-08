@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 3
@@ -14,16 +14,14 @@ using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
-    quote
-        local iv = try
-            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
-        catch
-            b -> missing
-        end
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ f636175b-3889-4b73-bc2f-355cd8d0b4d1
@@ -167,13 +165,13 @@ md"Examples include Power, Exponential, Square Root, Logarithmic and Hyperbolic.
 md"### Data for Plotting"
 
 # ╔═╡ 7beb7f5b-2b4c-4520-b27e-eb12dea9352a
-md"intercept $(β_0)$: $(@bind intercept Slider(-1.0:0.1:1.0, 0.0, true))"
+md"intercept $(β_0)$: $(@bind intercept Slider(-1.0:0.1:1.0; default=0.0, show_value=true))"
 
 # ╔═╡ 51debf88-cd90-421e-ad69-bc678e3369c5
-md"coefficient 1 $(β_1)$: $(@bind coeff1 Slider(-0.25:0.01:0.25, 0.0, true))"
+md"coefficient 1 $(β_1)$: $(@bind coeff1 Slider(-0.25:0.01:0.25; default=0.0, show_value=true))"
 
 # ╔═╡ 3155971b-fbb0-4ccd-b606-72c43f6ecb3c
-md"coefficient 2 $(β_2)$: $(@bind coeff2 Slider(-0.25:0.01:0.25, 0.0, true))"
+md"coefficient 2 $(β_2)$: $(@bind coeff2 Slider(-0.25:0.01:0.25; default=0.0, show_value=true))"
 
 # ╔═╡ a7f9029c-8996-4c62-a82d-5560fc22de22
 line(x) = intercept + coeff1 * x + coeff2 * x

@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 3
@@ -14,16 +14,14 @@ using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
-    quote
-        local iv = try
-            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
-        catch
-            b -> missing
-        end
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ d8134e3a-ca12-419d-81eb-d64a7e0e5969
@@ -74,10 +72,10 @@ md"### Sigmoid Function"
 md"$S(x) = \frac{1}{1 + e^{-x}}$"
 
 # ╔═╡ 2b15594b-1c55-4e76-b323-8aa5df68f6f9
-md"slope: $(@bind slope Slider(-10.0:1.0:10.0, 1.0, true))"
+md"slope: $(@bind slope Slider(-10.0:1.0:10.0; default=1.0, show_value=true))"
 
 # ╔═╡ 1d76d6a7-44ab-4597-9c31-4111b23e2701
-md"intercept: $(@bind intercept Slider(-5.0:1.0:5.0, 0.0, true))"
+md"intercept: $(@bind intercept Slider(-5.0:1.0:5.0; default=0.0, show_value=true))"
 
 # ╔═╡ 54012055-634f-4a4c-8bd7-e95d9041ff59
 y(x) = intercept + slope * x

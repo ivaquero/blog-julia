@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 1
@@ -14,16 +14,14 @@ using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
-    quote
-        local iv = try
-            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
-        catch
-            b -> missing
-        end
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ b721b6dc-c66a-400c-8f8f-253ea8acb18f
@@ -82,7 +80,7 @@ md"Fahrenheit to Celsius equation:"
 md"$°C = \frac{5}{9} × (°F - 32)$"
 
 # ╔═╡ 123a515c-6028-4eb9-911a-fec7f9a45bc0
-@bind sliderF Slider(50.0:90.0, 72.0, true)
+@bind sliderF Slider(50.0:90.0; default=72, show_value=true)
 
 # ╔═╡ fc3a5370-2110-4444-842e-f13e1f18942b
 sliderC = round(5 / 9 * (sliderF - 32), digits=1)
@@ -212,8 +210,8 @@ md"where $m$ is the rise-over-run slope and $b$ is the y-intercept."
 
 # ╔═╡ 5aa696a3-df8a-484c-9dd1-c5e6076f5c13
 begin
-    slope = @bind m Slider(-10.0:0.1:10.0, 1.0, true)
-    intercept = @bind b Slider(-10.0:0.1:10.0, 0.0, true)
+    slope = @bind m Slider(-10.0:0.1:10.0; default=1, show_value=true)
+    intercept = @bind b Slider(-10.0:0.1:10.0; default=0, show_value=true)
 
     md"Parameters: \
     Slope: $(slope) \

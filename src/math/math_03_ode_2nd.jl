@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 2
@@ -14,16 +14,14 @@ using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
-    quote
-        local iv = try
-            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
-        catch
-            b -> missing
-        end
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ aaaa0553-0b07-4fcf-a249-d48fd3a623cf
@@ -191,16 +189,16 @@ end
 f(du, u, p, t) = [0, g]
 
 # ╔═╡ 4ce7a287-79e1-44e5-8457-cd7c2c1873e0
-md"Seconds: $(@bind t_end Slider(0.0:0.1:20.0, 20.0, true))"
+md"Seconds: $(@bind t_end Slider(0.0:0.1:20.0; default=20, show_value=true))"
 
 # ╔═╡ 5b3db5f4-47e8-485d-a157-bf8d1d2bb8f8
 tspan = (t_begin, t_end)
 
 # ╔═╡ b78d2f18-5826-4ac4-9b1e-2a9f28e8b342
-md"Initial Velocity (m/s): $(@bind v_begin Slider(50.0:150.0, 100.0, true))"
+md"Initial Velocity (m/s): $(@bind v_begin Slider(50.0:150.0; default=100, show_value=true))"
 
 # ╔═╡ 77e4774b-e677-4483-8a36-9ca71f14abad
-md"Angle in Degrees: $(@bind θ Slider(0.0:90.0, 45.0, true))"
+md"Angle in Degrees: $(@bind θ Slider(0.0:90.0; default=45, show_value=true))"
 
 # ╔═╡ 4889b9c3-9e88-4b2a-8537-ddb415a39fe6
 vx_begin = cosd(θ) * v_begin
@@ -378,8 +376,8 @@ md"### Plot Solution"
 begin
     reset
     md"""
-    Time (seconds): $(@bind tm_end Slider(0.0:0.01:20.0, 20.0, true)) |
-    Initial Position (m): $(@bind xx_begin Slider(-0.25:0.01:0.25, 0.25, true))
+    Time (seconds): $(@bind tm_end Slider(0.0:0.01:20.0; default=20, show_value=true)) |
+    Initial Position (m): $(@bind xx_begin Slider(-0.25:0.01:0.25; default=0.25, show_value=true))
     """
 end
 
@@ -390,8 +388,8 @@ tmspan = (t_begin, tm_end)
 begin
     reset
     md"""
-    Spring Constant (N/m): $(@bind k Slider(0.5:0.01:2.0, 1.0, true)) |
-    Mass (kg): $(@bind m Slider(0.5:0.01:2.0, 1.0, true))
+    Spring Constant (N/m): $(@bind k Slider(0.5:0.01:2.0; default=1, show_value=true)) |
+    Mass (kg): $(@bind m Slider(0.5:0.01:2.0; default=1.0, show_value=true))
     """
 end
 

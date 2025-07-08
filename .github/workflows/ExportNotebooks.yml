@@ -21,7 +21,7 @@ jobs:
       - name: 🙌 Install Julia
         uses: julia-actions/setup-julia@v2
         with:
-          version: '1.11.3'
+          version: '1.11.5'
 
       - name: ⏱ Cache notebook states
         uses: actions/cache@v4
@@ -40,10 +40,17 @@ jobs:
             ${{ runner.os }}-dotjulia-v1-${{ hashFiles('**/Project.toml', '**/Manifest.toml') }}
 
       - name: 🪴 Generate site
-        run: julia --project=pluto-deployment-environment -e '
-          import Pkg;
-          Pkg.instantiate();
-          include("./generate.jl")'
+        run: |
+          julia --project=pluto-deployment-environment -e '
+            import Pkg
+            Pkg.instantiate()
+            import PlutoPages
+
+            PlutoPages.generate("."; html_report_path="generation_report.html")
+
+            cp("./netlify.toml", "./_site/netlify.toml")'
+        env:
+          JULIA_PKG_SERVER: ''
 
       - name: 📰 Upload site generation report
         uses: actions/upload-artifact@v4
@@ -53,7 +60,7 @@ jobs:
 
       - name: 🚀 Deploy to GitHub Pages (main)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: JamesIves/github-pages-deploy-action@releases/v4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
@@ -63,7 +70,7 @@ jobs:
 
       - name: Deploy PR preview
         if: github.event_name == 'pull_request' && github.repository == github.event.pull_request.head.repo.full_name # if this build is a PR build and the PR is NOT from a fork
-        uses: JamesIves/github-pages-deploy-action@releases/v4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages

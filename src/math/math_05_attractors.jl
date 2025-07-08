@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 2
@@ -210,7 +210,7 @@ n = length(soll.t)
 # ╔═╡ 57c12cb6-2e0a-48e0-a9e7-f957a60e6cb5
 begin
     reset
-    md"Index: $(@bind idx Slider(1:n, n, true))"
+    md"Index: $(@bind idx Slider(1:n; default=n, show_value=true))"
 end
 
 # ╔═╡ f813b1f3-10eb-4606-8707-aeacff6d734c

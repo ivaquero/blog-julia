@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.5
+# v0.20.13
 
 #> [frontmatter]
 #> chapter = 2
@@ -14,16 +14,14 @@ using InteractiveUtils
 
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
-    quote
-        local iv = try
-            Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value
-        catch
-            b -> missing
-        end
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
+    #! format: on
 end
 
 # ╔═╡ 680cfeeb-3159-465d-9df2-f632edbe8ceb
@@ -92,7 +90,7 @@ x_range = -2.0:0.01:2.0
 md"### Control Panel"
 
 # ╔═╡ 63259faa-6e5d-4181-bf62-192ee73129d5
-md"x: $(@bind x Slider(x_range, 0.0, true))"
+md"x: $(@bind x Slider(x_range; default=0, show_value=true))"
 
 # ╔═╡ b63e80e3-ef66-4535-9965-0e54d9cb9e86
 x_left = x - 1
@@ -208,8 +206,8 @@ md"### Control Panel"
 
 # ╔═╡ 19cd4a95-810e-4949-8989-8ee49672389a
 md"""
-a: $(@bind a Slider(0.0:0.01:4.0, 0.0, true)) |
-b: $(@bind b Slider(0.0:0.01:4.0, 4.0, true))
+a: $(@bind a Slider(0.0:0.01:4.0; default=0, show_value=true)) |
+b: $(@bind b Slider(0.0:0.01:4.0; default=4, show_value=true))
 """
 
 # ╔═╡ 18128faa-f189-4d38-8e7c-d006b70274bc
