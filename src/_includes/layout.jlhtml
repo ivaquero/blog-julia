@@ -29,7 +29,7 @@ $(begin
 end)<html lang="en">
 <head>
 
-<title>$(f("title", splitext(basename(page.input.relative_path))[1])) — $(metadata["course_info"]["course_name"]) </title>
+<title>$(f("title", splitext(basename(page.input.relative_path))[1])) — Interactive Computational Thinking — MIT</title>
 $(let d = f("description", nothing)
     if d !== nothing
         @htl("""<meta name="description" content=$(d) />""")
@@ -59,6 +59,7 @@ end)
 $(pluto_head)
 
 </head>
+
 <body>
     <div id="pages-layout">
         <button id="toggle-nav" title="Open navigation"></button>
@@ -67,18 +68,11 @@ $(pluto_head)
         <ul>
             <li class="sidebar-about">
                 <div class="course-title">
-                    <h1><a href="$(root_url)"><span>$(metadata["course_info"]["course_name"])</span></a></h1>
-                    <h2><span>$(metadata["course_info"]["course_subtitle"])</span></h2>
+                   <h1><a href="$(root_url)">Julia Tutorials</a></h1>
+                    <h2><span>Make mathematics your playground!</span></h2>
                 </div>
                 <div class="authors">
-                    by $(let
-                        authors = metadata["course_info"]["authors"]
-                        nauthors = length(authors)
-                        map(enumerate(authors)) do (i, (author_name, author_link))
-                            sep = i == nauthors ? "" : ", "
-                            @htl("""<a href="$(author_link)">$(author_name)</a>$(sep)""")
-                        end
-                    end)
+                    by <a href="https://github.com/ivaquero">ivaquero</a>
                 </div>
             </li>
             <li>
@@ -89,22 +83,23 @@ $(pluto_head)
                     </form>
                 </div>
             </li>
-            <li>
+           <li>
                 <div class="track-chooser">
                     <label>
                     <h2>Choose your track:</h2>
                     <select>
                         <option value="">Choose...</option>
-                        $([
-                            @htl("""<option value="$track_id">$track_name</option> """)
-                            for (track_id, track_name) in metadata["tracks"]
-                        ])
+                        <option value="data">📈 Data Analysis</option>
+                        <option value="comp">💻 Scientific Computing</option>
+                        <option value="prob">📊 Probabilistic Programming</option>
                     </select>
                     </label>
                 </div>
             </li>
         $(let
-            sections = metadata["sidebar"]
+            sidebar_data = Base.include(@__MODULE__, joinpath(@__DIR__, "..", "sidebar data.jl"))
+            sections = sidebar_data["main"]
+
             [
                 @htl("""
                 <li>
@@ -137,19 +132,19 @@ $(pluto_head)
                         else
                             @htl("""<li class=$(class)><a href=$(href) title=$(desc)><span class="entry-number">Homework $(homework_number):</span> $(name)</a></li>""")
                         end
-                    end for other_page in collections[section_id].pages
+                    end for other_page in pages
                 ])
                 </ul>
                 </li>
                 """)
-                for (section_id, section_name) in sections
+                for (section_name, pages) in sections
             ]
         end)
                 <li><hr></li>
             <li class="sidebar-about">
                 <div class="semester-details">
-                    <a href="$(root_url)/semesters/">$(metadata["course_info"]["semester"])</a>
-                    <div class="course-numbers"><span>$(metadata["course_info"]["code"])</span></div>
+                    <a href="$(root_url)/semesters/">Fall 2025</a>
+                    <div class="course-numbers"><span>001</span></div>
                 </div>
                 <div class="logos">
                     <picture title="Julia Programming Language">
@@ -187,7 +182,7 @@ $(pluto_head)
         $(content)
         <div class="page-foot">
             <div class="copyright">
-                <a href="$(metadata["course_info"]["repo"])"><b>Edit this page on <img class="github-logo" src="https://unpkg.com/ionicons@5.1.2/dist/svg/logo-github.svg"></b></a><br>
+                <a href="https://github.com/ivaquero/blog-julia"><b>Edit this page on <img class="github-logo" src="https://unpkg.com/ionicons@5.1.2/dist/svg/logo-github.svg"></b></a><br>
                 Website based on the MIT course <a href="https://github.com/JuliaPluto/computational-thinking-template"><em><b>Computational Thinking Template</b>, and built with <a href="https://plutojl.org/">Pluto.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
             </div>
         </div>

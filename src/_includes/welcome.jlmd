@@ -9,6 +9,41 @@ layout: "layout.jlhtml"
 </div>
 
 <main class="homepage">
-$(Base.include(@__MODULE__, joinpath(@__DIR__, "..", "assets", "scripts", "get_highlights.jl")))
-$(Base.include(@__MODULE__, joinpath(@__DIR__, "..", "assets", "scripts", "get_subjects.jl")))
+<div class="wide subjectscontainer">
+        <h1>Subjects</h1>
+        <div class="subjects">$(
+            let
+                sidebar_data = Base.include(@__MODULE__, joinpath(@__DIR__, "..", "sidebar_data.jl"))
+                sections = sidebar_data["main"]
+
+                [
+                    @htl("""
+                    $([
+                        let
+                            input = other_page.input
+                            output = other_page.output
+
+                            name = get(output.frontmatter, "title", basename(input.relative_path))
+                            desc = get(output.frontmatter, "description", nothing)
+                            tags = get(output.frontmatter, "tags", String[])
+
+                            image = get(output.frontmatter, "image", nothing)
+
+                            class = [
+                                "no-decoration",
+                                ("tag_$(replace(x, " "=>"_"))" for x in tags)...,
+                            ]
+
+                            image === nothing || isempty(image) ? nothing : @htl("""<a title=$(desc) class=$(class) href=$(root_url * "/" * other_page.url)>
+                                <h3>$(name)</h3>
+                                <img src=$(image)>
+                            </a>""")
+                        end for other_page in pages
+                    ])
+                    """)
+                    for (section_name, pages) in sections
+                ]
+            end
+            )</div>
+    </div>
 </main>
