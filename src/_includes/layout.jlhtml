@@ -97,7 +97,7 @@ $(pluto_head)
                 </div>
             </li>
         $(let
-            sidebar_data = Base.include(@__MODULE__, joinpath(@__DIR__, "..", "sidebar data.jl"))
+            sidebar_data = Base.include(@__MODULE__, joinpath(@__DIR__, "..", "sidebar_data.jl"))
             sections = sidebar_data["main"]
 
             [
