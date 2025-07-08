@@ -119,7 +119,7 @@ const init_search = async () => {
 
                     const snippet_p = result_div.querySelector(".snippet")
                     snippet_p.innerHTML = ``
-                    ;["...", text.slice(excerpt_start - excerpt_padding, excerpt_start).trimStart(), ...elements, "..."].forEach((el) => snippet_p.append(el))
+                        ;["...", text.slice(excerpt_start - excerpt_padding, excerpt_start).trimStart(), ...elements, "..."].forEach((el) => snippet_p.append(el))
                 }
 
                 // text_match_positions.slice(start_index, start_index + num_matches).forEach(([start, length]) => {
