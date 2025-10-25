@@ -21,7 +21,7 @@ jobs:
       - name: 🙌 Install Julia
         uses: julia-actions/setup-julia@v2
         with:
-          version: '1.11.5'
+          version: "1.12.1"
 
       - name: ⏱ Cache notebook states
         uses: actions/cache@v4
@@ -50,7 +50,7 @@ jobs:
 
             cp("./netlify.toml", "./_site/netlify.toml")'
         env:
-          JULIA_PKG_SERVER: ''
+          JULIA_PKG_SERVER: ""
 
       - name: 📰 Upload site generation report
         uses: actions/upload-artifact@v4
