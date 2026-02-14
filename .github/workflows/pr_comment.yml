@@ -11,4 +11,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v3
         with:
           message: "Once the build has completed, you can preview your PR at this URL: https://${{ github.event.pull_request.base.repo.owner.login }}.github.io/${{ github.event.pull_request.base.repo.name }}/previews/PR${{ github.event.number }}/"
-          GITHUB_TOKEN: ${{ secrets.github-token }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
