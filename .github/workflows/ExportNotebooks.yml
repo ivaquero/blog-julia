@@ -24,7 +24,7 @@ jobs:
           version: "1.12.1"
 
       - name: ⏱ Cache notebook states
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: _cache
           key: ${{ runner.os }}-pluto_state_cache-v3-${{ hashFiles('**/Project.toml', '**/Manifest.toml') }}-${{ github.run_id }}
@@ -32,7 +32,7 @@ jobs:
             ${{ runner.os }}-pluto_state_cache-v3-${{ hashFiles('**/Project.toml', '**/Manifest.toml') }}
 
       - name: ⏱ Cache .julia
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.julia
           key: ${{ runner.os }}-dotjulia-v1-${{ hashFiles('**/Project.toml', '**/Manifest.toml') }}-${{ github.run_id }}
@@ -53,7 +53,7 @@ jobs:
           JULIA_PKG_SERVER: ""
 
       - name: 📰 Upload site generation report
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           path: generation_report.html
@@ -62,7 +62,7 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.github-token }}
           BRANCH: gh-pages
           FOLDER: _site
           CLEAN_EXCLUDE: |
@@ -72,6 +72,6 @@ jobs:
         if: github.event_name == 'pull_request' && github.repository == github.event.pull_request.head.repo.full_name # if this build is a PR build and the PR is NOT from a fork
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.github-token }}
           BRANCH: gh-pages
           FOLDER: _site
